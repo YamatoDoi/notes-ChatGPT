@@ -11,6 +11,23 @@
         "-ExecutionPolicy",
         "Bypass",
         "-File",
+        "${workspaceFolder}\\scripts\\publish.ps1"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Publish notes with message",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
         "${workspaceFolder}\\scripts\\publish.ps1",
         "-Message",
         "${input:commitMessage}"
@@ -22,7 +39,7 @@
       }
     },
     {
-      "label": "Commit notes without push",
+      "label": "Revert latest published change",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -30,10 +47,7 @@
         "-ExecutionPolicy",
         "Bypass",
         "-File",
-        "${workspaceFolder}\\scripts\\publish.ps1",
-        "-Message",
-        "${input:commitMessage}",
-        "-NoPush"
+        "${workspaceFolder}\\scripts\\revert-latest.ps1"
       ],
       "problemMatcher": [],
       "presentation": {

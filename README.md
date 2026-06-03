@@ -28,26 +28,25 @@ GitHub Pagesで公開する場合は、リポジトリ設定の Pages で Source
 
 ## 公開作業の自動化
 
-記事を確認したあと、次のコマンドで `git add`、`git commit`、`git push` をまとめて実行できます。
+次のコマンドで `git add`、`git commit`、`git push` をまとめて実行できます。
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\publish.ps1
+```
+
+コミットメッセージを指定したい場合は、`-Message` を付けます。
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\publish.ps1 -Message "Add note about TripoSplat"
 ```
 
 VS Codeから実行する場合は、`Ctrl+Shift+P` で `Tasks: Run Task` を選び、`Publish notes` を実行します。
-コミットだけで止めたい場合は、`Commit notes without push` を選びます。
+コミットメッセージを指定したい場合は、`Publish notes with message` を選びます。
 
-pushせずにコミットまでで止めたい場合は、`-NoPush` を付けます。
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\publish.ps1 -Message "Add note about TripoSplat" -NoPush
-```
-
-公開前に差分を確認したい場合は、先に以下を実行してください。
+直近の公開を取り下げる場合は、履歴を書き換えずにrevertコミットを作ってpushします。
 
 ```powershell
-git status
-git diff
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\revert-latest.ps1
 ```
 
 ## 参考にした記事

@@ -32,6 +32,18 @@ function Get-WorkingTreeStatus {
     return git status --short
 }
 
+function New-DefaultCommitMessage {
+    <#
+    .SYNOPSIS
+    コミットメッセージ未指定時の既定メッセージを作成します。
+
+    .OUTPUTS
+    String
+    #>
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    return "Update notes $timestamp"
+}
+
 if (-not (Test-GitRepository)) {
     throw "このスクリプトはGitリポジトリ内で実行してください。"
 }
@@ -47,11 +59,8 @@ Write-Host "現在の変更:"
 $changedFiles | ForEach-Object { Write-Host "  $_" }
 
 if ([string]::IsNullOrWhiteSpace($Message)) {
-    $Message = Read-Host "コミットメッセージを入力してください"
-}
-
-if ([string]::IsNullOrWhiteSpace($Message)) {
-    throw "コミットメッセージが空です。"
+    $Message = New-DefaultCommitMessage
+    Write-Host "コミットメッセージ未指定のため、既定メッセージを使用します: $Message"
 }
 
 git add --all
