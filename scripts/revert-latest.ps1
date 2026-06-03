@@ -1,4 +1,4 @@
-# 直近または指定したコミットをrevertし、取り下げコミットをpushします。
+# Reverts the latest or specified commit, then pushes the revert commit.
 param(
     [Parameter(Mandatory = $false)]
     [string]$Target = "HEAD"
@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 function Test-GitRepository {
     <#
     .SYNOPSIS
-    現在位置がGitリポジトリ内か確認します。
+    Checks whether the current directory is inside a Git repository.
 
     .OUTPUTS
     Boolean
@@ -21,7 +21,7 @@ function Test-GitRepository {
 function Get-WorkingTreeStatus {
     <#
     .SYNOPSIS
-    作業ツリーの未コミット変更を取得します。
+    Gets uncommitted working tree changes.
 
     .OUTPUTS
     String[]
@@ -30,18 +30,18 @@ function Get-WorkingTreeStatus {
 }
 
 if (-not (Test-GitRepository)) {
-    throw "このスクリプトはGitリポジトリ内で実行してください。"
+    throw "Run this script inside a Git repository."
 }
 
 $changedFiles = Get-WorkingTreeStatus
 
 if ($changedFiles) {
-    Write-Host "未コミットの変更があるため、取り下げを中止します。"
+    Write-Host "Uncommitted changes exist. Aborting revert."
     $changedFiles | ForEach-Object { Write-Host "  $_" }
-    throw "取り下げ前に作業ツリーをクリーンにしてください。"
+    throw "Clean the working tree before reverting."
 }
 
 git revert --no-edit $Target
 git push
 
-Write-Host "取り下げコミットをpushしました: $Target"
+Write-Host "Revert commit was pushed: $Target"

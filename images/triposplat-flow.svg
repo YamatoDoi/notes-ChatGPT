@@ -1,71 +1,72 @@
-<!-- TripoSplatが画像入力から3D Gaussian Splat出力へ変換する流れを示す図解です。 -->
+<!-- TripoSplatが画像1枚から3Dで回して見られるデータを作る流れを示す図解です。 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" role="img" aria-labelledby="title desc">
-  <title id="title">TripoSplatの処理フロー</title>
-  <desc id="desc">入力画像、TripoSplat、密度制御、3DGS出力、ビューア確認の順に進む図解。</desc>
+  <title id="title">画像1枚から3Dプレビューを作る流れ</title>
+  <desc id="desc">画像1枚を用意し、TripoSplatが見えない角度を推測し、3Dビューアで回して確認する流れ。</desc>
   <defs>
-    <linearGradient id="surface" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#edf4f0"/>
-    </linearGradient>
-    <filter id="shadow" x="-12%" y="-18%" width="124%" height="140%">
-      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#1f2522" flood-opacity="0.13"/>
+    <filter id="cardShadow" x="-8%" y="-12%" width="116%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1f2522" flood-opacity="0.12"/>
     </filter>
   </defs>
 
   <rect width="880" height="460" rx="18" fill="#f7f8f5"/>
-  <path d="M73 126 C177 58 285 66 377 136 C474 209 574 210 802 103" fill="none" stroke="#d6ded5" stroke-width="18" stroke-linecap="round"/>
-  <path d="M78 350 C221 409 328 329 462 317 C586 306 651 373 804 326" fill="none" stroke="#e8d5c2" stroke-width="16" stroke-linecap="round"/>
+  <text x="440" y="54" fill="#1f2522" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="26" font-weight="800" text-anchor="middle">画像1枚から、3Dで回して見られるデータを作る</text>
+  <text x="440" y="84" fill="#657068" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" text-anchor="middle">写真やイラストを入力し、AIが奥行きと見えない角度を補います</text>
 
-  <g filter="url(#shadow)">
-    <rect x="46" y="144" width="138" height="128" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
-    <rect x="220" y="144" width="138" height="128" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
-    <rect x="394" y="144" width="138" height="128" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
-    <rect x="568" y="144" width="138" height="128" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+  <g filter="url(#cardShadow)" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <rect x="48" y="122" width="220" height="216" rx="8" fill="#ffffff" stroke="#d6ded5"/>
+    <rect x="330" y="122" width="220" height="216" rx="8" fill="#ffffff" stroke="#d6ded5"/>
+    <rect x="612" y="122" width="220" height="216" rx="8" fill="#ffffff" stroke="#d6ded5"/>
   </g>
 
-  <g fill="none" stroke="#216b55" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M184 208 H220"/>
-    <path d="M210 198 L220 208 L210 218"/>
-    <path d="M358 208 H394"/>
-    <path d="M384 198 L394 208 L384 218"/>
-    <path d="M532 208 H568"/>
-    <path d="M558 198 L568 208 L558 218"/>
+  <g fill="none" stroke="#216b55" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M278 230 H318"/>
+    <path d="M306 216 L320 230 L306 244"/>
+    <path d="M560 230 H600"/>
+    <path d="M588 216 L602 230 L588 244"/>
   </g>
 
   <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle">
-    <text x="115" y="188" fill="#1f2522" font-size="18" font-weight="700">入力画像</text>
-    <text x="115" y="220" fill="#657068" font-size="13">1枚の2D画像</text>
+    <text x="158" y="164" fill="#216b55" font-size="14" font-weight="800">STEP 1</text>
+    <text x="158" y="191" fill="#1f2522" font-size="22" font-weight="800">画像を用意</text>
+    <text x="158" y="308" fill="#657068" font-size="14">写真・イラスト1枚</text>
 
-    <text x="289" y="188" fill="#1f2522" font-size="18" font-weight="700">TripoSplat</text>
-    <text x="289" y="220" fill="#657068" font-size="13">画像から潜在表現へ</text>
+    <text x="440" y="164" fill="#216b55" font-size="14" font-weight="800">STEP 2</text>
+    <text x="440" y="191" fill="#1f2522" font-size="22" font-weight="800">AIが推測</text>
+    <text x="440" y="308" fill="#657068" font-size="14">奥行き・裏側を補う</text>
 
-    <text x="463" y="188" fill="#1f2522" font-size="18" font-weight="700">DeG</text>
-    <text x="463" y="220" fill="#657068" font-size="13">密度を適応制御</text>
-
-    <text x="637" y="188" fill="#1f2522" font-size="18" font-weight="700">3DGS出力</text>
-    <text x="637" y="220" fill="#657068" font-size="13">.ply / .splat</text>
+    <text x="722" y="164" fill="#216b55" font-size="14" font-weight="800">STEP 3</text>
+    <text x="722" y="191" fill="#1f2522" font-size="22" font-weight="800">3Dで確認</text>
+    <text x="722" y="308" fill="#657068" font-size="14">.ply / .splatで出力</text>
   </g>
 
-  <g transform="translate(736 134)">
-    <rect x="0" y="0" width="104" height="148" rx="8" fill="#ffffff" stroke="#d6ded5"/>
-    <circle cx="52" cy="54" r="28" fill="#216b55" opacity="0.18"/>
-    <circle cx="43" cy="64" r="12" fill="#216b55" opacity="0.34"/>
-    <circle cx="66" cy="70" r="9" fill="#b46a2a" opacity="0.52"/>
-    <circle cx="61" cy="39" r="7" fill="#216b55" opacity="0.44"/>
-    <text x="52" y="112" fill="#1f2522" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" font-weight="700" text-anchor="middle">Viewer</text>
-    <text x="52" y="133" fill="#657068" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" text-anchor="middle">確認・編集</text>
+  <g transform="translate(93 212)">
+    <rect x="0" y="0" width="130" height="72" rx="6" fill="#eef2ea" stroke="#b7c8bf"/>
+    <path d="M18 57 L48 31 L69 50 L88 36 L116 57 Z" fill="#216b55" opacity="0.22"/>
+    <circle cx="100" cy="22" r="10" fill="#b46a2a" opacity="0.68"/>
+    <rect x="31" y="16" width="37" height="42" rx="5" fill="#ffffff" stroke="#216b55" stroke-width="2"/>
+    <path d="M35 21 H64 M35 30 H64 M35 39 H58" stroke="#216b55" stroke-width="3" stroke-linecap="round"/>
   </g>
 
-  <g fill="#216b55">
-    <circle cx="157" cy="336" r="7"/>
-    <circle cx="249" cy="336" r="9"/>
-    <circle cx="341" cy="336" r="6"/>
-    <circle cx="433" cy="336" r="12"/>
-    <circle cx="525" cy="336" r="8"/>
-    <circle cx="617" cy="336" r="11"/>
-    <circle cx="709" cy="336" r="6"/>
+  <g transform="translate(374 214)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="0" width="132" height="68" rx="8" fill="#eef2ea" stroke="#b7c8bf"/>
+    <path d="M28 34 C28 19 40 10 54 16 C61 5 82 7 87 22 C102 22 112 32 108 46 C105 57 93 61 78 58 H45 C33 59 24 51 28 34 Z" fill="#ffffff" stroke="#216b55" stroke-width="3"/>
+    <path d="M51 35 H85 M68 19 V53 M45 47 C58 39 79 39 92 47 M45 23 C58 31 79 31 92 23" stroke="#216b55" stroke-width="2.4"/>
   </g>
-  <g fill="#657068" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle" font-size="13">
-    <text x="433" y="374">ガウシアン数を調整して、品質と描画コストを選ぶ</text>
+
+  <g transform="translate(656 211)">
+    <rect x="0" y="0" width="132" height="82" rx="8" fill="#eef2ea" stroke="#b7c8bf"/>
+    <path d="M22 62 L54 43 L92 59" fill="none" stroke="#657068" stroke-width="2"/>
+    <path d="M54 43 V17 M54 43 L79 28 M54 43 L32 29" fill="none" stroke="#657068" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="62" cy="39" rx="31" ry="18" fill="#216b55" opacity="0.17"/>
+    <ellipse cx="54" cy="35" rx="15" ry="24" fill="#216b55" opacity="0.3"/>
+    <ellipse cx="75" cy="48" rx="11" ry="16" fill="#b46a2a" opacity="0.48"/>
+    <circle cx="43" cy="55" r="4" fill="#216b55"/>
+    <circle cx="82" cy="28" r="4" fill="#216b55"/>
+    <circle cx="71" cy="62" r="3" fill="#b46a2a"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <rect x="118" y="374" width="644" height="44" rx="8" fill="#ffffff" stroke="#d6ded5"/>
+    <text x="440" y="402" fill="#1f2522" font-size="16" font-weight="700" text-anchor="middle">使い道: コンセプト確認・Webビューア・AR/VR向けの3Dプレビュー</text>
   </g>
 </svg>

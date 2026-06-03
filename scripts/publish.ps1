@@ -1,4 +1,4 @@
-# 技術ノートの差分確認、コミット、pushを1コマンドで実行します。
+# Publishes note changes by staging, committing, and pushing them.
 param(
     [Parameter(Mandatory = $false)]
     [string]$Message,
@@ -12,7 +12,7 @@ $ErrorActionPreference = "Stop"
 function Test-GitRepository {
     <#
     .SYNOPSIS
-    現在位置がGitリポジトリ内か確認します。
+    Checks whether the current directory is inside a Git repository.
 
     .OUTPUTS
     Boolean
@@ -24,7 +24,7 @@ function Test-GitRepository {
 function Get-WorkingTreeStatus {
     <#
     .SYNOPSIS
-    コミット対象になり得る作業ツリーの変更を取得します。
+    Gets working tree changes that can be committed.
 
     .OUTPUTS
     String[]
@@ -35,7 +35,7 @@ function Get-WorkingTreeStatus {
 function New-DefaultCommitMessage {
     <#
     .SYNOPSIS
-    コミットメッセージ未指定時の既定メッセージを作成します。
+    Creates the default commit message when none is provided.
 
     .OUTPUTS
     String
@@ -45,22 +45,22 @@ function New-DefaultCommitMessage {
 }
 
 if (-not (Test-GitRepository)) {
-    throw "このスクリプトはGitリポジトリ内で実行してください。"
+    throw "Run this script inside a Git repository."
 }
 
 $changedFiles = Get-WorkingTreeStatus
 
 if (-not $changedFiles) {
-    Write-Host "コミットする変更はありません。"
+    Write-Host "No changes to commit."
     exit 0
 }
 
-Write-Host "現在の変更:"
+Write-Host "Current changes:"
 $changedFiles | ForEach-Object { Write-Host "  $_" }
 
 if ([string]::IsNullOrWhiteSpace($Message)) {
     $Message = New-DefaultCommitMessage
-    Write-Host "コミットメッセージ未指定のため、既定メッセージを使用します: $Message"
+    Write-Host "No commit message was provided. Using default: $Message"
 }
 
 git add --all
@@ -73,20 +73,20 @@ if ($diffExitCode -eq 0) {
 } elseif ($diffExitCode -eq 1) {
     $hasStagedChanges = $true
 } else {
-    throw "ステージ済み差分の確認に失敗しました。"
+    throw "Failed to inspect staged changes."
 }
 
 if (-not $hasStagedChanges) {
-    Write-Host "ステージ済みの変更はありません。"
+    Write-Host "No staged changes."
     exit 0
 }
 
 git commit -m $Message
 
 if ($NoPush) {
-    Write-Host "NoPushが指定されたため、pushは実行しません。"
+    Write-Host "NoPush was specified. Skipping push."
     exit 0
 }
 
 git push
-Write-Host "コミットとpushが完了しました。"
+Write-Host "Commit and push completed."
