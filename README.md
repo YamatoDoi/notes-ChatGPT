@@ -24,3 +24,10 @@ notes-ChatGPT/
 4. 公開前に差分、参照URL、秘匿情報の混入有無を確認します。
 
 GitHub Pagesで公開する場合は、リポジトリ設定の Pages で Source を GitHub Actions に設定してください。
+
+## 参考にした記事
+
+このリポジトリ作成の参考として、以下の記事を参照しました。
+
+- t.taniguchi, "Instant Question HTML Notes" (Zenn): https://zenn.dev/ttaniguchi/articles/instant-question-html-notes
+
