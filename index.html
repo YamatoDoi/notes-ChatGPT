@@ -1,0 +1,112 @@
+<!doctype html>
+<!-- 技術ノートサイトの入口として、カテゴリ別の記事一覧と運用導線を提供します。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>技術質問ノート</title>
+    <meta
+      name="description"
+      content="Codexと一緒に疑問をHTML記事として蓄積するための静的な技術ノートです。"
+    >
+    <link rel="stylesheet" href="styles/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-title" href="./" aria-label="技術質問ノートのトップへ">
+          <span class="site-title__mark">?</span>
+          <span>技術質問ノート</span>
+        </a>
+        <nav class="site-nav" aria-label="主要ナビゲーション">
+          <a href="#notes">記事一覧</a>
+          <a href="#workflow">運用</a>
+          <a href="guides/getting-started/">始め方</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro-band" aria-labelledby="intro-title">
+        <div class="content-grid content-grid--intro">
+          <div>
+            <p class="eyebrow">Personal Technical Notes</p>
+            <h1 id="intro-title">疑問を、その場で読めるHTMLノートへ。</h1>
+            <p class="intro-lead">
+              移動中や作業中に浮かんだ技術的な疑問を、Codexで調査・図解・参照付きの記事として蓄積します。
+              ビルド不要の静的HTMLなので、GitHub Pagesや任意の静的ホスティングでそのまま公開できます。
+            </p>
+          </div>
+          <img
+            class="flow-image"
+            src="images/notes-flow.svg"
+            alt="質問からHTML記事、GitHub、ブラウザ閲覧へ進む流れ"
+            width="780"
+            height="420"
+          >
+        </div>
+      </section>
+
+      <section class="section-band" id="notes" aria-labelledby="notes-title">
+        <div class="content-wrap">
+          <div class="section-heading">
+            <p class="eyebrow">Notes</p>
+            <h2 id="notes-title">記事一覧</h2>
+          </div>
+
+          <div class="note-list">
+            <article class="note-card">
+              <div class="note-card__meta">
+                <span class="category-label">Guides</span>
+                <time datetime="2026-06-04">2026-06-04</time>
+              </div>
+              <h3><a href="guides/getting-started/">Codexと育てる技術ノートの始め方</a></h3>
+              <p>
+                このリポジトリで技術ノートを増やすための構成、記事作成ルール、公開前チェックをまとめます。
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-band section-band--muted" id="workflow" aria-labelledby="workflow-title">
+        <div class="content-wrap">
+          <div class="section-heading">
+            <p class="eyebrow">Workflow</p>
+            <h2 id="workflow-title">基本運用</h2>
+          </div>
+
+          <ol class="workflow-list">
+            <li>
+              <span class="workflow-list__number">1</span>
+              <div>
+                <h3>疑問を「質問」から始めて投げる</h3>
+                <p>Codexが一次情報を確認し、HTML記事として読みやすく整理します。</p>
+              </div>
+            </li>
+            <li>
+              <span class="workflow-list__number">2</span>
+              <div>
+                <h3>差分と参照URLを確認する</h3>
+                <p>公開前に本文、図解、出典、秘匿情報の混入がないことを人間が確認します。</p>
+              </div>
+            </li>
+            <li>
+              <span class="workflow-list__number">3</span>
+              <div>
+                <h3>GitHub Pagesであとから読む</h3>
+                <p>HTML/CSS/画像だけの構成なので、ビルドなしで静的サイトとして配信できます。</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="content-wrap">
+        <p>調査内容は一次情報を添えて記録し、公開前に必ず差分を確認します。</p>
+      </div>
+    </footer>
+  </body>
+</html>

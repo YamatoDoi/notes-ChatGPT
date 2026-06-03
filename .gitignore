@@ -1,0 +1,42 @@
+# 静的HTMLノートに不要な生成物、ローカル設定、秘匿情報をGit管理から外します。
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Local environment and secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+secrets/
+credentials/
+
+# Dependency and build outputs
+node_modules/
+dist/
+build/
+.cache/
+.parcel-cache/
+.vite/
+coverage/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Large local archives
+*.zip
+*.tar
+*.tar.gz
+*.7z

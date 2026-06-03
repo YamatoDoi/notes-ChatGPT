@@ -1,0 +1,57 @@
+<!-- 質問からHTML記事として蓄積し、ブラウザで読み返す流れを示す図解です。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 420" role="img" aria-labelledby="title desc">
+  <title id="title">技術質問ノートの作成フロー</title>
+  <desc id="desc">質問、Codex、HTML記事、GitHub、ブラウザ閲覧の順に進む流れ。</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef2ea"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-20%" width="130%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#1f2522" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="780" height="420" rx="18" fill="#f7f8f5"/>
+  <path d="M82 96 C184 20 314 58 374 128 C451 218 610 163 696 88" fill="none" stroke="#d6ded5" stroke-width="18" stroke-linecap="round"/>
+  <path d="M103 304 C205 372 338 334 414 272 C511 193 614 230 694 318" fill="none" stroke="#e8d5c2" stroke-width="16" stroke-linecap="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="48" y="142" width="130" height="108" rx="8" fill="url(#panel)" stroke="#d6ded5"/>
+    <rect x="216" y="142" width="130" height="108" rx="8" fill="url(#panel)" stroke="#d6ded5"/>
+    <rect x="384" y="142" width="130" height="108" rx="8" fill="url(#panel)" stroke="#d6ded5"/>
+    <rect x="552" y="142" width="130" height="108" rx="8" fill="url(#panel)" stroke="#d6ded5"/>
+  </g>
+
+  <g fill="none" stroke="#216b55" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M178 196 H216"/>
+    <path d="M206 186 L216 196 L206 206"/>
+    <path d="M346 196 H384"/>
+    <path d="M374 186 L384 196 L374 206"/>
+    <path d="M514 196 H552"/>
+    <path d="M542 186 L552 196 L542 206"/>
+  </g>
+
+  <g fill="#1f2522" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="113" y="184" font-size="18" font-weight="700">質問</text>
+    <text x="113" y="214" font-size="13" fill="#657068">音声・チャット</text>
+    <text x="281" y="184" font-size="18" font-weight="700">Codex</text>
+    <text x="281" y="214" font-size="13" fill="#657068">調査と整理</text>
+    <text x="449" y="184" font-size="18" font-weight="700">HTML記事</text>
+    <text x="449" y="214" font-size="13" fill="#657068">図解・参照URL</text>
+    <text x="617" y="184" font-size="18" font-weight="700">GitHub Pages</text>
+    <text x="617" y="214" font-size="13" fill="#657068">あとで読む</text>
+  </g>
+
+  <g fill="#216b55">
+    <circle cx="113" cy="296" r="8"/>
+    <circle cx="281" cy="296" r="8"/>
+    <circle cx="449" cy="296" r="8"/>
+    <circle cx="617" cy="296" r="8"/>
+  </g>
+  <g fill="#657068" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle" font-size="13">
+    <text x="113" y="326">疑問を逃さない</text>
+    <text x="281" y="326">一次情報を確認</text>
+    <text x="449" y="326">トップに追加</text>
+    <text x="617" y="326">差分確認後に公開</text>
+  </g>
+</svg>

@@ -1,0 +1,145 @@
+<!doctype html>
+<!-- 技術ノート運用を始めるための構成、記事作成ルール、確認観点をまとめます。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Codexと育てる技術ノートの始め方 | 技術質問ノート</title>
+    <meta
+      name="description"
+      content="Codexを使って疑問を静的HTMLの技術ノートとして蓄積するための初期構成と運用ルールです。"
+    >
+    <link rel="stylesheet" href="../../styles/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-title" href="../../" aria-label="技術質問ノートのトップへ">
+          <span class="site-title__mark">?</span>
+          <span>技術質問ノート</span>
+        </a>
+        <nav class="site-nav" aria-label="主要ナビゲーション">
+          <a href="../../#notes">記事一覧</a>
+          <a href="../../#workflow">運用</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="article-layout">
+      <article class="article">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <a href="../../">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Guides</span>
+        </nav>
+
+        <header class="article-header">
+          <p class="eyebrow">Guides</p>
+          <h1>Codexと育てる技術ノートの始め方</h1>
+          <p class="article-summary">
+            疑問をすぐ記事化するために、リポジトリ構成、記事の品質基準、公開前チェックを先に決めておきます。
+          </p>
+          <dl class="article-meta">
+            <div>
+              <dt>公開日</dt>
+              <dd><time datetime="2026-06-04">2026-06-04</time></dd>
+            </div>
+            <div>
+              <dt>カテゴリ</dt>
+              <dd>Guides</dd>
+            </div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="goal-title">
+          <h2 id="goal-title">このノートの目的</h2>
+          <p>
+            このリポジトリは、日常の疑問を静的HTMLの記事として残すための場所です。
+            調査、要約、図解、参照URLの整理をCodexに任せつつ、公開前の差分確認は人間が行います。
+          </p>
+          <p>
+            HTML/CSS/画像だけで構成するため、ビルド環境に依存せず、GitHub Pagesなどの静的ホスティングへ載せやすい点を重視しています。
+          </p>
+        </section>
+
+        <section aria-labelledby="structure-title">
+          <h2 id="structure-title">ファイル構成</h2>
+          <pre><code>notes-ChatGPT/
+├── .github/workflows/static.yml
+├── styles/site.css
+├── images/notes-flow.svg
+├── guides/getting-started/index.html
+├── .gitignore
+├── AGENTS.md
+├── README.md
+└── index.html</code></pre>
+          <p>
+            記事はカテゴリごとのディレクトリに置きます。
+            たとえばAI関連の記事は <code>ai/topic-name/index.html</code> のように配置し、トップページの一覧へリンクを追加します。
+          </p>
+        </section>
+
+        <section aria-labelledby="flow-title">
+          <h2 id="flow-title">記事化の流れ</h2>
+          <figure>
+            <img
+              src="../../images/notes-flow.svg"
+              alt="質問からCodexでの記事化、GitHubへの蓄積、ブラウザ閲覧へ進む流れ"
+              width="780"
+              height="420"
+            >
+            <figcaption>スマホやPCから投げた疑問を、HTML記事として蓄積してあとから読み返します。</figcaption>
+          </figure>
+          <ol>
+            <li>ユーザーが「質問」で始まる依頼を送ります。</li>
+            <li>Codexが一次情報を確認し、本文・図解・参照URLを含むHTMLを作成します。</li>
+            <li>トップページの記事一覧に追加し、表示を確認します。</li>
+            <li>差分確認後、必要に応じてGitHubへ反映します。</li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="quality-title">
+          <h2 id="quality-title">記事の品質基準</h2>
+          <ul>
+            <li>結論、背景、具体例、注意点を分けて書きます。</li>
+            <li>仕様や料金、API、ライブラリ情報は一次情報を確認し、参照URLを末尾に残します。</li>
+            <li>読者があとで使えるよう、抽象説明だけでなく実務上の判断材料を含めます。</li>
+            <li>秘匿情報、個人情報、未確認の社内情報は書きません。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="check-title">
+          <h2 id="check-title">公開前チェック</h2>
+          <ul class="check-list">
+            <li>本文に秘密情報やローカル固有の認証情報が含まれていない。</li>
+            <li>参照URLが一次情報または信頼できる情報源になっている。</li>
+            <li>スマホ幅でも本文、図、コードブロックが横にはみ出さない。</li>
+            <li><code>index.html</code> から記事へ辿れる。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="references-title">
+          <h2 id="references-title">参照URL</h2>
+          <ul>
+            <li>
+              <a href="https://zenn.dev/ttaniguchi/articles/instant-question-html-notes">
+                移動中でも就寝前でも、Codexと育てる「技術ノート」
+              </a>
+            </li>
+            <li>
+              <a href="https://docs.github.com/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages">
+                GitHub Docs: Using custom workflows with GitHub Pages
+              </a>
+            </li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="content-wrap">
+        <p><a href="../../">記事一覧へ戻る</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
