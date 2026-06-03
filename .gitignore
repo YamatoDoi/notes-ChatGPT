@@ -4,7 +4,9 @@
 .DS_Store
 Thumbs.db
 desktop.ini
-.vscode/
+.vscode/*
+!.vscode/
+!.vscode/tasks.json
 .idea/
 
 # Local environment and secrets

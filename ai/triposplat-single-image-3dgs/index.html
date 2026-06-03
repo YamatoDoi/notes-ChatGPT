@@ -1,0 +1,243 @@
+<!doctype html>
+<!-- TripoSplatの概要、仕組み、導入方法、制作時の注意点を整理する技術ノートです。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TripoSplatで画像1枚から3D Gaussian Splatを生成する | 技術質問ノート</title>
+    <meta
+      name="description"
+      content="画像1枚から3D Gaussian Splatを生成するオープンソースモデルTripoSplatの特徴、DeGの考え方、ComfyUIでの試し方、注意点を整理します。"
+    >
+    <link rel="stylesheet" href="../../styles/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-title" href="../../" aria-label="技術質問ノートのトップへ">
+          <span class="site-title__mark">?</span>
+          <span>技術質問ノート</span>
+        </a>
+        <nav class="site-nav" aria-label="主要ナビゲーション">
+          <a href="../../#notes">記事一覧</a>
+          <a href="../../#workflow">運用</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="article-layout">
+      <article class="article">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <a href="../../">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>AI / 3D</span>
+        </nav>
+
+        <header class="article-header">
+          <p class="eyebrow">AI / 3D</p>
+          <h1>TripoSplatで画像1枚から3D Gaussian Splatを生成する</h1>
+          <p class="article-summary">
+            TripoSplatは、1枚の2D画像から3D Gaussian Splatting用のアセットを生成するオープンソースモデルです。
+            メッシュ生成器ではなく、点群状のガウシアン表現を生成するため、用途と制約を分けて理解する必要があります。
+          </p>
+          <dl class="article-meta">
+            <div>
+              <dt>作成日</dt>
+              <dd><time datetime="2026-06-04">2026-06-04</time></dd>
+            </div>
+            <div>
+              <dt>対象</dt>
+              <dd>3D生成AI / 3DGS / ComfyUI</dd>
+            </div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="summary-title">
+          <h2 id="summary-title">結論</h2>
+          <p>
+            TripoSplatは、単一画像から <code>.ply</code> や <code>.splat</code> として扱える3D Gaussianアセットを作るモデルです。
+            公式GitHubとHugging Faceでコードと重みがMITライセンスとして公開され、ComfyUIでもDay 0サポートされています。
+          </p>
+          <p>
+            実務上の価値は、画像からすぐに回転閲覧できる3D表現を作れること、そしてガウシアン数を用途に応じて調整できることです。
+            一方で、リギング、UV、ポリゴン編集を前提にしたメッシュ制作とは別物なので、ゲーム用最終アセットやDCC編集に使う場合は変換工程や品質確認が必要です。
+          </p>
+        </section>
+
+        <section aria-labelledby="overview-title">
+          <h2 id="overview-title">何ができるのか</h2>
+          <figure>
+            <img
+              src="../../images/triposplat-flow.svg"
+              alt="入力画像からTripoSplatを通して3D Gaussian Splatを出力し、ビューアや制作パイプラインで確認する流れ"
+              width="880"
+              height="460"
+            >
+            <figcaption>TripoSplatは、画像を3DGS表現へ変換し、ガウシアン数を調整しながら出力できます。</figcaption>
+          </figure>
+          <p>
+            3D Gaussian Splattingは、表面をポリゴンで直接表すのではなく、多数の半透明な楕円体状プリミティブを空間に配置して見た目を再構成する表現です。
+            TripoSplatはこの表現を、複数視点の撮影なしに1枚の画像から生成することを狙っています。
+          </p>
+          <p>
+            公式説明では、キャラクター、プロップ、スタイル化されたオブジェクトのように、見た目の印象が重要な対象で強みがあるとされています。
+          </p>
+        </section>
+
+        <section aria-labelledby="features-title">
+          <h2 id="features-title">特徴</h2>
+          <div class="table-scroll" role="region" aria-label="TripoSplatの主要特徴">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">観点</th>
+                  <th scope="col">要点</th>
+                  <th scope="col">制作上の意味</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">入力</th>
+                  <td>1枚の2D画像</td>
+                  <td>撮影セットや多視点画像がなくても試作できる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">出力</th>
+                  <td><code>.ply</code> / <code>.splat</code></td>
+                  <td>SuperSplatやSparkJSなどの3DGSビューアで確認できる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">密度制御</th>
+                  <td>DeGにより必要な場所へ多くのガウシアンを割り当てる</td>
+                  <td>細部に密度を寄せ、単純な領域は軽くする設計。</td>
+                </tr>
+                <tr>
+                  <th scope="row">予算制御</th>
+                  <td>最大262,144までガウシアン数を調整可能</td>
+                  <td>背景用は軽く、主役アセットは高密度にするLoD的な運用ができる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">公開形態</th>
+                  <td>コードと重みがMITライセンスで公開</td>
+                  <td>ローカル実行、改変、ワークフロー統合を検討しやすい。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="deg-title">
+          <h2 id="deg-title">DeGの考え方</h2>
+          <p>
+            TripoSplatの中心的なアイデアは、Density-Sampled Gaussians、略してDeGです。
+            従来の固定グリッドや固定長配列にガウシアンを押し込むのではなく、学習可能な密度分布からガウシアン中心をサンプリングします。
+          </p>
+          <p>
+            論文では、レンダリング誤差の改善に効く場所へ密度が集まるように学習し、単一の潜在表現から異なる解像度の3DGSを復元できる点が説明されています。
+            これにより、同じ入力から軽量版と高品質版を取り出すような使い分けがしやすくなります。
+          </p>
+          <p>
+            さらに、順序を持たない集合的な潜在表現を拡散モデルで扱いやすくするため、VecSeqという再インデックス機構も導入されています。
+            実装を読むときは、単なる画像から3Dへの変換器ではなく、「可変密度の3DGS表現を生成するモデル」と見ると理解しやすいです。
+          </p>
+        </section>
+
+        <section aria-labelledby="try-title">
+          <h2 id="try-title">試す方法</h2>
+          <p>
+            手早く試すなら、ComfyUIのテンプレートから実行する方法が最短です。
+            ComfyUI公式ブログでは、ComfyUIをv0.23.0以降へ更新し、Template LibraryでTripoSplatを検索する流れが案内されています。
+          </p>
+          <pre><code>ComfyUI/
+└── models/
+    ├── background_removal/
+    │   └── birefnet.safetensors
+    ├── diffusion_models/
+    │   └── triposplat_fp16.safetensors
+    ├── clip_vision/
+    │   └── dino_v3_vit_h.safetensors
+    └── vae/
+        ├── flux2-vae.safetensors
+        └── triposplat_vae_decoder_fp16.safetensors</code></pre>
+          <p>
+            Pythonで直接試す場合は、公式推論コードを取得し、Hugging Faceから重みを <code>ckpts/</code> に配置します。
+            公式READMEでは、Hugging Face CLI、<code>huggingface_hub</code>、ModelScope、手動ダウンロードの選択肢が示されています。
+          </p>
+          <pre><code>hf download VAST-AI/TripoSplat --local-dir ckpts/
+pip install numpy safetensors pillow tqdm
+python run_example.py
+
+# ブラウザUIで試す場合
+pip install gradio
+python run_gradio.py</code></pre>
+        </section>
+
+        <section aria-labelledby="cautions-title">
+          <h2 id="cautions-title">注意点</h2>
+          <ul>
+            <li>3DGS出力は、ポリゴンメッシュ、UV、ボーン、リトポロジ済み形状とは違います。</li>
+            <li>単一画像から背面や隠れた形状を推定するため、見えない部分はモデルの推測になります。</li>
+            <li>ガウシアン数を増やすほど品質は上げやすくなりますが、ファイルサイズや描画負荷も増えます。</li>
+            <li>商用利用を検討する場合は、GitHubとHugging Faceの最新ライセンス表記、入力画像の権利、出力物の利用条件を確認してください。</li>
+            <li>ローカル実行に必要なGPUメモリや実行時間は環境に依存します。まずは小さい画像と少ないガウシアン数で検証するのが安全です。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="usecase-title">
+          <h2 id="usecase-title">向いている使い方</h2>
+          <ul>
+            <li>キャラクターや小物のコンセプトをすばやく3Dで回して確認する。</li>
+            <li>AR/VRやブラウザビューアで、見た目重視の3Dプレビューを作る。</li>
+            <li>背景用と主役用でガウシアン数を変え、軽量版と高品質版を使い分ける。</li>
+            <li>ComfyUIの画像生成ワークフローに、3DGS出力を後段として組み込む。</li>
+          </ul>
+          <p>
+            逆に、最初からゲームエンジンで物理・衝突・スキニング・UV編集まで行う前提なら、生成後にメッシュ化や手直しが必要になる可能性が高いです。
+          </p>
+        </section>
+
+        <section aria-labelledby="references-title">
+          <h2 id="references-title">参照URL</h2>
+          <ul>
+            <li>
+              <a href="https://cginterest.com/2026/06/03/%E7%94%BB%E5%83%8F1%E6%9E%9A%E3%81%8B%E3%82%893d%E3%82%AC%E3%82%A6%E3%82%B7%E3%82%A2%E3%83%B3%E3%82%B9%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%82%92%E7%94%9F%E6%88%90%E3%81%A7%E3%81%8D%E3%82%8B/">
+                CGinterest: 画像1枚から3Dガウシアンスプラットを生成できる「TripoSplat」がオープンソースで登場
+              </a>
+            </li>
+            <li>
+              <a href="https://www.tripo3d.ai/research/triposplat">
+                Tripo: TripoSplat: Generative 3D Gaussians with Learned Density Control
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/VAST-AI-Research/TripoSplat">
+                GitHub: VAST-AI-Research/TripoSplat
+              </a>
+            </li>
+            <li>
+              <a href="https://huggingface.co/VAST-AI/TripoSplat">
+                Hugging Face: VAST-AI/TripoSplat
+              </a>
+            </li>
+            <li>
+              <a href="https://arxiv.org/abs/2605.16355">
+                arXiv: Generative 3D Gaussians with Learned Density Control
+              </a>
+            </li>
+            <li>
+              <a href="https://blog.comfy.org/p/bringing-native-support-for-3d-gaussian">
+                ComfyUI Blog: Bringing Native Support for 3D Gaussian Splats into ComfyUI with TripoSplat
+              </a>
+            </li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="content-wrap">
+        <p><a href="../../">記事一覧へ戻る</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

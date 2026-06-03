@@ -1,0 +1,71 @@
+<!-- TripoSplatが画像入力から3D Gaussian Splat出力へ変換する流れを示す図解です。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" role="img" aria-labelledby="title desc">
+  <title id="title">TripoSplatの処理フロー</title>
+  <desc id="desc">入力画像、TripoSplat、密度制御、3DGS出力、ビューア確認の順に進む図解。</desc>
+  <defs>
+    <linearGradient id="surface" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#edf4f0"/>
+    </linearGradient>
+    <filter id="shadow" x="-12%" y="-18%" width="124%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#1f2522" flood-opacity="0.13"/>
+    </filter>
+  </defs>
+
+  <rect width="880" height="460" rx="18" fill="#f7f8f5"/>
+  <path d="M73 126 C177 58 285 66 377 136 C474 209 574 210 802 103" fill="none" stroke="#d6ded5" stroke-width="18" stroke-linecap="round"/>
+  <path d="M78 350 C221 409 328 329 462 317 C586 306 651 373 804 326" fill="none" stroke="#e8d5c2" stroke-width="16" stroke-linecap="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="46" y="144" width="138" height="128" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <rect x="220" y="144" width="138" height="128" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <rect x="394" y="144" width="138" height="128" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <rect x="568" y="144" width="138" height="128" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+  </g>
+
+  <g fill="none" stroke="#216b55" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M184 208 H220"/>
+    <path d="M210 198 L220 208 L210 218"/>
+    <path d="M358 208 H394"/>
+    <path d="M384 198 L394 208 L384 218"/>
+    <path d="M532 208 H568"/>
+    <path d="M558 198 L568 208 L558 218"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="115" y="188" fill="#1f2522" font-size="18" font-weight="700">入力画像</text>
+    <text x="115" y="220" fill="#657068" font-size="13">1枚の2D画像</text>
+
+    <text x="289" y="188" fill="#1f2522" font-size="18" font-weight="700">TripoSplat</text>
+    <text x="289" y="220" fill="#657068" font-size="13">画像から潜在表現へ</text>
+
+    <text x="463" y="188" fill="#1f2522" font-size="18" font-weight="700">DeG</text>
+    <text x="463" y="220" fill="#657068" font-size="13">密度を適応制御</text>
+
+    <text x="637" y="188" fill="#1f2522" font-size="18" font-weight="700">3DGS出力</text>
+    <text x="637" y="220" fill="#657068" font-size="13">.ply / .splat</text>
+  </g>
+
+  <g transform="translate(736 134)">
+    <rect x="0" y="0" width="104" height="148" rx="8" fill="#ffffff" stroke="#d6ded5"/>
+    <circle cx="52" cy="54" r="28" fill="#216b55" opacity="0.18"/>
+    <circle cx="43" cy="64" r="12" fill="#216b55" opacity="0.34"/>
+    <circle cx="66" cy="70" r="9" fill="#b46a2a" opacity="0.52"/>
+    <circle cx="61" cy="39" r="7" fill="#216b55" opacity="0.44"/>
+    <text x="52" y="112" fill="#1f2522" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" font-weight="700" text-anchor="middle">Viewer</text>
+    <text x="52" y="133" fill="#657068" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" text-anchor="middle">確認・編集</text>
+  </g>
+
+  <g fill="#216b55">
+    <circle cx="157" cy="336" r="7"/>
+    <circle cx="249" cy="336" r="9"/>
+    <circle cx="341" cy="336" r="6"/>
+    <circle cx="433" cy="336" r="12"/>
+    <circle cx="525" cy="336" r="8"/>
+    <circle cx="617" cy="336" r="11"/>
+    <circle cx="709" cy="336" r="6"/>
+  </g>
+  <g fill="#657068" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle" font-size="13">
+    <text x="433" y="374">ガウシアン数を調整して、品質と描画コストを選ぶ</text>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+// VS Codeから技術ノートの公開スクリプトを実行するタスクを定義します。
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Publish notes",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\publish.ps1",
+        "-Message",
+        "${input:commitMessage}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Commit notes without push",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\publish.ps1",
+        "-Message",
+        "${input:commitMessage}",
+        "-NoPush"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "commitMessage",
+      "type": "promptString",
+      "description": "コミットメッセージ",
+      "default": "Update notes"
+    }
+  ]
+}
