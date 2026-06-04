@@ -1,0 +1,215 @@
+<!doctype html>
+<!-- WSL containersの発表内容、想定用途、既存のWindowsコンテナ環境との違いを整理する技術ノートです。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WSL containersでWindows上のLinuxコンテナ実行はどう変わるか | 技術質問ノート</title>
+    <meta
+      name="description"
+      content="Microsoft Build 2026で発表されたWSL containersの概要、WSL containers CLI/API、Docker Desktopとの違い、現時点の注意点を整理します。"
+    >
+    <link rel="stylesheet" href="../../styles/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-title" href="../../" aria-label="技術質問ノートのトップへ">
+          <span class="site-title__mark">?</span>
+          <span>技術質問ノート</span>
+        </a>
+        <nav class="site-nav" aria-label="主要ナビゲーション">
+          <a href="../../#notes">記事一覧</a>
+          <a href="../../#workflow">運用</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="article-layout">
+      <article class="article">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <a href="../../">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Windows / WSL</span>
+        </nav>
+
+        <header class="article-header">
+          <p class="eyebrow">Windows / WSL</p>
+          <h1>WSL containersでWindows上のLinuxコンテナ実行はどう変わるか</h1>
+          <p class="article-summary">
+            WSL containersは、Windows上でLinuxコンテナを作成・実行・操作するためのWSL新機能です。
+            Microsoft Build 2026で発表され、数カ月以内にパブリックプレビューとして提供予定とされています。
+          </p>
+          <dl class="article-meta">
+            <div>
+              <dt>作成日</dt>
+              <dd><time datetime="2026-06-04">2026-06-04</time></dd>
+            </div>
+            <div>
+              <dt>対象</dt>
+              <dd>Windows / WSL / Linux containers</dd>
+            </div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="summary-title">
+          <h2 id="summary-title">結論</h2>
+          <p>
+            WSL containersは、Windowsの標準機能であるWSL側にLinuxコンテナ実行の入口を持たせる動きです。
+            発表時点では、Linuxコンテナを扱うための <code>WSL containers CLI</code> と、Windowsネイティブアプリから利用できる
+            <code>WSL containers API</code> が示されています。
+          </p>
+          <p>
+            重要なのは、これは「今すぐDocker Desktopを完全に置き換える完成版」というより、
+            Windows標準の開発基盤としてLinuxコンテナを扱いやすくするためのプレビュー予定機能だという点です。
+            具体的なコマンド体系、対応イメージ、既存Docker/Podman/containerdとの関係は、プレビュー公開後に確認する必要があります。
+          </p>
+        </section>
+
+        <section aria-labelledby="overview-title">
+          <h2 id="overview-title">何が発表されたのか</h2>
+          <figure>
+            <img
+              src="../../images/wsl-containers-flow.svg"
+              alt="WindowsアプリやコマンドラインからWSL containers CLI/APIを通じてLinuxコンテナを操作する構成"
+              width="880"
+              height="460"
+            >
+            <figcaption>WSL containersは、Windows側の操作入口からWSL上のLinuxコンテナへつなぐ構成として説明されています。</figcaption>
+          </figure>
+          <p>
+            MicrosoftはBuild 2026で、Windows開発者向けの新機能群の一つとしてWSL containersを発表しました。
+            公式ブログでは、WSLがWindows上でLinuxワークロードを動かす基盤になっていることを前提に、
+            そこへLinuxコンテナを作成・実行・操作する仕組みを統合すると説明しています。
+          </p>
+          <p>
+            Publickeyの記事では、日本時間2026年6月3日未明に開幕したMicrosoft Build 2026での発表として取り上げられています。
+            現時点のキーワードは、標準機能、CLI/API、パブリックプレビュー、そして企業管理です。
+          </p>
+        </section>
+
+        <section aria-labelledby="components-title">
+          <h2 id="components-title">提供される要素</h2>
+          <div class="table-scroll" role="region" aria-label="WSL containersの主要要素">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">要素</th>
+                  <th scope="col">説明</th>
+                  <th scope="col">使いどころ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">WSL containers CLI</th>
+                  <td>Windows上のコマンドラインからLinuxコンテナをビルド、実行、デプロイするための入口。</td>
+                  <td>ローカル開発、テスト、AI/MLワークロードの検証。</td>
+                </tr>
+                <tr>
+                  <th scope="row">WSL containers API</th>
+                  <td>WindowsネイティブアプリからLinuxコンテナ実行機能へアクセスするためのAPI。</td>
+                  <td>WindowsアプリにLinuxベースの処理、テストパイプライン、ローカルAI処理を組み込む。</td>
+                </tr>
+                <tr>
+                  <th scope="row">企業向け管理</th>
+                  <td>ポリシーベースの有効化、イメージ取得元の制御、ホストとの相互作用の管理が示されている。</td>
+                  <td>開発者PC上で何が動いているかをIT部門が把握・統制する。</td>
+                </tr>
+                <tr>
+                  <th scope="row">提供時期</th>
+                  <td>数カ月以内にWSLの通常アップデートとしてパブリックプレビュー予定。</td>
+                  <td>本番採用ではなく、まず検証計画と要件整理を進める段階。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="difference-title">
+          <h2 id="difference-title">Docker Desktopとは何が違うのか</h2>
+          <p>
+            現在のWindows上のLinuxコンテナ開発では、Docker DesktopのWSL 2バックエンドを使う構成が一般的です。
+            Docker DesktopはDocker Engine、GUI、拡張機能、Kubernetes連携などをまとめた製品として提供されています。
+          </p>
+          <p>
+            WSL containersは、少なくとも発表内容を見る限り、Windows/WSL側にLinuxコンテナの標準的な実行入口を作るものです。
+            したがって比較軸は「Docker DesktopのUIやエコシステムを置き換えるか」ではなく、
+            「Windows標準のWSL更新だけでLinuxコンテナ実行をどこまで扱えるようになるか」です。
+          </p>
+          <ul>
+            <li>個人開発では、セットアップやライセンス面の選択肢が増える可能性があります。</li>
+            <li>企業環境では、IT管理者がイメージ取得元や実行状況を把握しやすくなる可能性があります。</li>
+            <li>Docker Desktop固有の機能や既存ワークフローがそのまま移るとは限りません。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="impact-title">
+          <h2 id="impact-title">開発者への影響</h2>
+          <p>
+            期待できる影響は、Windows上でLinuxコンテナを扱う初期設定の負担が下がることです。
+            特に、WindowsをメインOSにしながらLinuxベースのCLI、テスト、AI/ML処理、ビルド環境を扱う開発者にとって意味があります。
+          </p>
+          <p>
+            また、APIが提供される点は重要です。
+            Windowsアプリや開発支援ツールが、内部処理としてLinuxコンテナを起動できるようになれば、
+            「WindowsアプリのUI」と「Linux環境で動く処理」を自然に組み合わせやすくなります。
+          </p>
+        </section>
+
+        <section aria-labelledby="cautions-title">
+          <h2 id="cautions-title">現時点の注意点</h2>
+          <ul>
+            <li>2026年6月4日時点では、発表段階であり、パブリックプレビューはまだ数カ月以内の予定です。</li>
+            <li>具体的なCLI構文、対応Windowsバージョン、必要なWSLバージョンは、プレビュー公開後に確認が必要です。</li>
+            <li>Docker Desktop、Podman、containerd、Dev Containersとの実務上の住み分けは、実装詳細が出てから判断します。</li>
+            <li>企業環境では、ポリシー、監査、イメージ取得元制御が利点になり得ますが、管理機能の具体仕様は未確認です。</li>
+            <li>「LinuxコンテナがWindowsカーネル上で直接動く」という意味ではなく、WSLのLinux実行基盤を使う機能として理解するのが安全です。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="next-title">
+          <h2 id="next-title">今後確認すること</h2>
+          <ul>
+            <li>プレビュー版で提供されるコマンド名とサブコマンド。</li>
+            <li>Dockerfile、OCIイメージ、Compose相当の機能への対応範囲。</li>
+            <li>既存のDocker Desktop環境と同居できるか。</li>
+            <li>VS Code Dev ContainersやCI向けローカルテストとの相性。</li>
+            <li>企業ポリシーによるイメージソース制御や監査ログの具体的な挙動。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="references-title">
+          <h2 id="references-title">参照URL</h2>
+          <ul>
+            <li>
+              <a href="https://www.publickey1.jp/blog/26/windowslinuxwsl_containers.html">
+                Publickey: ［速報］Windows上でLinuxコンテナの作成や実行ができる「WSL containers」発表
+              </a>
+            </li>
+            <li>
+              <a href="https://blogs.windows.com/windowsdeveloper/2026/06/02/build-2026-furthering-windows-as-the-trusted-platform-for-development/">
+                Windows Developer Blog: Build 2026: Furthering Windows as the trusted platform for development
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/microsoft/WSL">
+                GitHub: microsoft/WSL
+              </a>
+            </li>
+            <li>
+              <a href="https://docs.docker.com/desktop/features/wsl/">
+                Docker Docs: Docker Desktop WSL 2 backend on Windows
+              </a>
+            </li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="content-wrap">
+        <p><a href="../../">記事一覧へ戻る</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

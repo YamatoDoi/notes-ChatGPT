@@ -1,0 +1,56 @@
+<!-- Windows上のCLI/APIからWSL containersを通じてLinuxコンテナを扱う流れを示す図解です。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" role="img" aria-labelledby="title desc">
+  <title id="title">WSL containersの概念図</title>
+  <desc id="desc">WindowsアプリやコマンドラインがWSL containers CLI/APIを通じて、WSL上のLinuxコンテナを作成、実行、管理する流れ。</desc>
+  <defs>
+    <linearGradient id="surface" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef2ea"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-18%" width="120%" height="145%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#1f2522" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <rect width="880" height="460" rx="18" fill="#f7f8f5"/>
+  <rect x="48" y="54" width="784" height="352" rx="14" fill="#ffffff" stroke="#d6ded5"/>
+  <rect x="78" y="86" width="284" height="284" rx="10" fill="#eef2ea" stroke="#c9d4c8"/>
+  <rect x="408" y="86" width="394" height="284" rx="10" fill="#f8faf7" stroke="#c9d4c8"/>
+
+  <text x="104" y="124" fill="#174d3e" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="700">Windows</text>
+  <text x="434" y="124" fill="#174d3e" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="700">WSL Linux environment</text>
+
+  <g filter="url(#shadow)">
+    <rect x="110" y="160" width="220" height="64" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <rect x="110" y="254" width="220" height="64" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <rect x="458" y="160" width="300" height="64" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <rect x="458" y="254" width="300" height="64" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="220" y="186" fill="#1f2522" font-size="17" font-weight="700" text-anchor="middle">Command line</text>
+    <text x="220" y="207" fill="#657068" font-size="13" text-anchor="middle">build / run / deploy</text>
+
+    <text x="220" y="280" fill="#1f2522" font-size="17" font-weight="700" text-anchor="middle">Native Windows app</text>
+    <text x="220" y="301" fill="#657068" font-size="13" text-anchor="middle">programmatic access</text>
+
+    <text x="608" y="186" fill="#1f2522" font-size="17" font-weight="700" text-anchor="middle">WSL containers CLI / API</text>
+    <text x="608" y="207" fill="#657068" font-size="13" text-anchor="middle">standard Windows entry point</text>
+
+    <text x="608" y="280" fill="#1f2522" font-size="17" font-weight="700" text-anchor="middle">Linux containers</text>
+    <text x="608" y="301" fill="#657068" font-size="13" text-anchor="middle">local dev / AI / testing</text>
+  </g>
+
+  <g fill="none" stroke="#216b55" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M330 192 H458"/>
+    <path d="M446 181 L458 192 L446 203"/>
+    <path d="M330 286 H458"/>
+    <path d="M446 275 L458 286 L446 297"/>
+    <path d="M608 224 V254"/>
+    <path d="M598 242 L608 254 L618 242"/>
+  </g>
+
+  <g fill="#b46a2a" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="700">
+    <text x="96" y="390">Policy-based enablement and management for enterprises</text>
+  </g>
+</svg>
