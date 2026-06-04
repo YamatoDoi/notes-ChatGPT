@@ -1,0 +1,78 @@
+<!-- 従来VRとライトフィールドHMDの焦点手がかりの違いを説明する図解です。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" role="img" aria-labelledby="title desc">
+  <title id="title">従来VRとライトフィールドHMDの違い</title>
+  <desc id="desc">従来VRでは視差による奥行きとピント位置がずれ、ライトフィールドHMDでは光線方向を再現して奥行きごとの焦点手がかりを与える。</desc>
+  <defs>
+    <linearGradient id="surface" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef2ea"/>
+    </linearGradient>
+    <filter id="shadow" x="-12%" y="-18%" width="124%" height="145%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#1f2522" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <rect width="880" height="500" rx="18" fill="#f7f8f5"/>
+  <rect x="48" y="58" width="364" height="366" rx="12" fill="#ffffff" stroke="#d6ded5"/>
+  <rect x="468" y="58" width="364" height="366" rx="12" fill="#ffffff" stroke="#d6ded5"/>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="78" y="100" fill="#174d3e" font-size="22" font-weight="700">従来ステレオHMD</text>
+    <text x="498" y="100" fill="#174d3e" font-size="22" font-weight="700">ライトフィールドHMD</text>
+    <text x="78" y="126" fill="#657068" font-size="14">視差で奥行きを作るが、ピント面は固定されやすい</text>
+    <text x="498" y="126" fill="#657068" font-size="14">光線の向きを再現し、奥行きごとの焦点手がかりを狙う</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="104" y="166" width="56" height="158" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <rect x="300" y="166" width="56" height="158" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <circle cx="132" cy="368" r="24" fill="#eef2ea" stroke="#216b55" stroke-width="3"/>
+    <circle cx="328" cy="368" r="24" fill="#eef2ea" stroke="#216b55" stroke-width="3"/>
+
+    <rect x="524" y="166" width="56" height="158" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <rect x="614" y="166" width="34" height="158" rx="5" fill="#eef2ea" stroke="#b7c8bf"/>
+    <rect x="696" y="166" width="56" height="158" rx="8" fill="url(#surface)" stroke="#d6ded5"/>
+    <circle cx="552" cy="368" r="24" fill="#eef2ea" stroke="#216b55" stroke-width="3"/>
+    <circle cx="724" cy="368" r="24" fill="#eef2ea" stroke="#216b55" stroke-width="3"/>
+  </g>
+
+  <g fill="none" stroke="#216b55" stroke-width="3" stroke-linecap="round">
+    <path d="M160 238 C205 214 248 214 300 238"/>
+    <path d="M160 252 C205 252 248 252 300 252"/>
+    <path d="M160 266 C205 290 248 290 300 266"/>
+
+    <path d="M580 218 C620 190 658 190 696 218"/>
+    <path d="M580 246 C620 246 658 246 696 246"/>
+    <path d="M580 274 C620 302 658 302 696 274"/>
+    <path d="M580 205 C626 228 650 263 696 300" stroke="#b46a2a"/>
+    <path d="M580 292 C626 264 650 228 696 192" stroke="#b46a2a"/>
+  </g>
+
+  <g fill="#b46a2a" stroke="#b46a2a" stroke-width="2">
+    <line x1="230" y1="154" x2="230" y2="326"/>
+    <line x1="492" y1="206" x2="760" y2="206"/>
+    <line x1="492" y1="286" x2="760" y2="286"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13">
+    <text x="186" y="148" fill="#b46a2a">固定されるピント面</text>
+    <text x="496" y="198" fill="#b46a2a">近い奥行きの光線</text>
+    <text x="496" y="330" fill="#b46a2a">遠い奥行きの光線</text>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="132" y="372" fill="#1f2522" font-size="13" font-weight="700">左目</text>
+    <text x="328" y="372" fill="#1f2522" font-size="13" font-weight="700">右目</text>
+    <text x="552" y="372" fill="#1f2522" font-size="13" font-weight="700">左目</text>
+    <text x="724" y="372" fill="#1f2522" font-size="13" font-weight="700">右目</text>
+    <text x="132" y="348" fill="#657068" font-size="12">焦点</text>
+    <text x="328" y="348" fill="#657068" font-size="12">焦点</text>
+    <text x="552" y="348" fill="#657068" font-size="12">焦点</text>
+    <text x="724" y="348" fill="#657068" font-size="12">焦点</text>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14">
+    <text x="80" y="396" fill="#657068">奥行き知覚とピント調節が一致しにくい</text>
+    <text x="500" y="396" fill="#657068">光線方向を使って焦点手がかりを増やす</text>
+  </g>
+</svg>

@@ -1,0 +1,334 @@
+<!doctype html>
+<!-- NHK技研のライトフィールドHMDを題材に、方式の原理、発表データ、実用上の課題を整理する技術ノートです。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NHKのライトフィールドHMDは何を解決しようとしているのか | 技術質問ノート</title>
+    <meta
+      name="description"
+      content="NHK技研が開発した薄型ライトフィールドHMDを題材に、視覚疲労の原因、ライトフィールド方式の仕組み、発表データ、実用化までの課題を整理します。"
+    >
+    <link rel="stylesheet" href="../../styles/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-title" href="../../" aria-label="技術質問ノートのトップへ">
+          <span class="site-title__mark">?</span>
+          <span>技術質問ノート</span>
+        </a>
+        <nav class="site-nav" aria-label="主要ナビゲーション">
+          <a href="../../#notes">記事一覧</a>
+          <a href="../../#workflow">運用</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="article-layout">
+      <article class="article">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <a href="../../">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>XR / Display</span>
+        </nav>
+
+        <header class="article-header">
+          <p class="eyebrow">XR / Display</p>
+          <h1>NHKのライトフィールドHMDは何を解決しようとしているのか</h1>
+          <p class="article-summary">
+            NHK放送技術研究所は、ライトフィールド方式を採用した薄型HMDを2026年5月に発表しました。
+            狙いは、VRで起きやすい「奥行きは近く見えるのに、目のピントは固定面に合う」問題を、光学的に軽減することです。
+          </p>
+          <dl class="article-meta">
+            <div>
+              <dt>作成日</dt>
+              <dd><time datetime="2026-06-05">2026-06-05</time></dd>
+            </div>
+            <div>
+              <dt>対象</dt>
+              <dd>VR / HMD / Light Field / Display Optics</dd>
+            </div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="summary-title">
+          <h2 id="summary-title">結論</h2>
+          <p>
+            ライトフィールド式HMDは、左右の視差だけで立体感を作る従来型VRに対して、目に届く光線の向きまで再現しようとする方式です。
+            見たい奥行きへ自然にピントを合わせられる可能性があるため、視覚疲労や不快感を減らす有力な方向性とされています。
+          </p>
+          <p>
+            NHK技研の2026年試作機のポイントは、レンズアレーと接眼レンズを接触配置する独自光学系です。
+            従来構成で必要だった約4cmの間隔をなくし、中間像を介さず3次元映像を目へ届けることで、光学系の奥行きを従来比79%削減したと発表されています。
+          </p>
+          <p>
+            一方で、ライトフィールド方式は万能ではありません。
+            光線の方向情報を増やすほど、空間解像度、視野角、計算量、ディスプレー画素密度の間で厳しいトレードオフが出ます。
+            そのため現時点では、製品化済みの一般向けVRヘッドセットというより、長時間視聴に耐える次世代HMDを目指す研究開発段階の技術として見るのが妥当です。
+          </p>
+        </section>
+
+        <section aria-labelledby="problem-title">
+          <h2 id="problem-title">従来VRが疲れやすい理由</h2>
+          <figure>
+            <img
+              src="../../images/light-field-hmd-principle.svg"
+              alt="従来VRでは視差の奥行きとピント位置がずれ、ライトフィールドHMDでは光線方向を再現して奥行きごとの焦点手がかりを与える図"
+              width="880"
+              height="500"
+            >
+            <figcaption>従来VRは視差で奥行きを作りますが、ピント位置は光学的に固定されがちです。ライトフィールド方式は光線の方向を再現し、焦点手がかりを与えることを狙います。</figcaption>
+          </figure>
+          <p>
+            多くのVR HMDは、左右の目に少し違う映像を見せる二眼視差で立体感を作ります。
+            しかし、目が実際にピントを合わせる先は、レンズで拡大されたディスプレー面または固定の虚像面です。
+            近くに見える仮想物体へ目を寄せても、ピント調節は固定距離に残るため、輻輳調節矛盾が起きます。
+          </p>
+          <p>
+            この矛盾は英語ではVergence-Accommodation Conflict、略してVACと呼ばれます。
+            VACのレビュー論文では、従来の立体ディスプレーが単一焦点面に仮想像を提示するため、人間の調節知覚を満たせないことが課題として説明されています。
+          </p>
+        </section>
+
+        <section aria-labelledby="how-title">
+          <h2 id="how-title">ライトフィールド式とは何か</h2>
+          <p>
+            ライトフィールドは、物体から目に届く光線の集合を扱う考え方です。
+            普通の2Dディスプレーが「その画素が何色か」を主に出すのに対し、ライトフィールド表示では「どの位置から、どの方向へ、どの色の光が出るか」を再現しようとします。
+          </p>
+          <p>
+            HMDでこれがうまく機能すると、目は実世界と同じように、近い仮想物体には近い物体として、遠い仮想物体には遠い物体としてピントを合わせやすくなります。
+            NVIDIA ResearchのNear-Eye Light Field Displaysも、収束、調節、両眼視差、網膜ぼけといった奥行き手がかりを提示できる薄型HMDの方向性として説明されています。
+          </p>
+        </section>
+
+        <section aria-labelledby="data-title">
+          <h2 id="data-title">今回集めた主なデータ</h2>
+          <div class="table-scroll" role="region" aria-label="NHKライトフィールドHMDの主なデータ">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">項目</th>
+                  <th scope="col">確認できた内容</th>
+                  <th scope="col">読み取り方</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">発表主体</th>
+                  <td>NHK放送技術研究所</td>
+                  <td>技研がライトフィールド方式HMDの研究を継続している。</td>
+                </tr>
+                <tr>
+                  <th scope="row">発表日</th>
+                  <td>2026年5月21日</td>
+                  <td>技研公開2026の直前に、新しい薄型試作機として発表された。</td>
+                </tr>
+                <tr>
+                  <th scope="row">展示</th>
+                  <td>技研公開2026、2026年5月28日から31日</td>
+                  <td>会場で実機装着による体験展示が案内された。</td>
+                </tr>
+                <tr>
+                  <th scope="row">方式</th>
+                  <td>ライトフィールド方式</td>
+                  <td>目へ届く光線の集合を再現し、奥行きごとのピント手がかりを与える。</td>
+                </tr>
+                <tr>
+                  <th scope="row">薄型化の鍵</th>
+                  <td>レンズアレーと接眼レンズの接触配置</td>
+                  <td>光線制御と集光を実質的に1枚の光学素子として扱う構成。</td>
+                </tr>
+                <tr>
+                  <th scope="row">従来課題</th>
+                  <td>従来構成ではレンズアレーと接眼レンズの間に約4cmの間隔が必要</td>
+                  <td>中間像を作ってから拡大する構成がHMDの大型化につながっていた。</td>
+                </tr>
+                <tr>
+                  <th scope="row">削減率</th>
+                  <td>光学系の奥行きを従来比79%削減</td>
+                  <td>中間像を介さず、遠方に直接3次元映像を形成する設計の効果。</td>
+                </tr>
+                <tr>
+                  <th scope="row">寸法の目安</th>
+                  <td>発表図では従来側約49.8mm、新構成側約10.5mmと読める</td>
+                  <td>公式本文の数値は79%削減。寸法値は公開図からの読み取りとして扱う。</td>
+                </tr>
+                <tr>
+                  <th scope="row">表示処理</th>
+                  <td>レイトレーシングによる要素画像の高速生成</td>
+                  <td>光線の経路を追跡し、3次元映像を作る光線情報をリアルタイム生成する。</td>
+                </tr>
+                <tr>
+                  <th scope="row">今後の課題</th>
+                  <td>高精細化と表示範囲の拡大</td>
+                  <td>NHKは教育、医療、エンタメなどへの応用を見据えて改良予定としている。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="optics-title">
+          <h2 id="optics-title">NHK試作機の光学的な工夫</h2>
+          <p>
+            従来のライトフィールドHMDでは、ディスプレーとレンズアレーでいったん空中に中間像を作り、それを接眼レンズで拡大します。
+            この構成は焦点手がかりを出すには有効ですが、レンズアレーと接眼レンズの間隔が必要になり、HMDが厚くなります。
+          </p>
+          <p>
+            NHKの新構成では、レンズアレーと接眼レンズを接触させ、光線制御と集光を同時に行います。
+            さらに、その光学系に合う要素画群像の生成手法を組み合わせ、中間像を作らず直接3次元映像を目へ届ける設計にしています。
+            ここが2026年発表の中心的な新規性です。
+          </p>
+          <p>
+            ただし、薄型化だけで体験品質が決まるわけではありません。
+            ライトフィールドHMDは、見る位置の許容範囲、視野角、奥行き範囲、空間解像度、計算負荷が互いに絡みます。
+            NVIDIAの研究でも、解像度、視野角、被写界深度、フォームファクター、目の移動範囲の間に基本的なトレードオフがあると整理されています。
+          </p>
+        </section>
+
+        <section aria-labelledby="history-title">
+          <h2 id="history-title">関連する流れ</h2>
+          <ul>
+            <li>2013年、NVIDIA Researchはマイクロレンズアレーを使ったNear-Eye Light Field Displaysを発表し、薄型HMDと調節手がかりの両立を研究テーマとして示しました。</li>
+            <li>2015年、Stanford Computational ImagingのLight Field Stereoscopeは、焦点手がかりが長時間VR体験の快適性に重要であることを前提に、複層パネルによる近眼ライトフィールド表示を提案しました。</li>
+            <li>2017年、JDIとNHKメディアテクノロジーは8K液晶をベースにした17型ライトフィールドディスプレイを発表し、裸眼3D表示の方向でライトフィールドを扱っていました。</li>
+            <li>2022年、NHK技研はライトフィールドHMDを公開し、従来HMDの視差とピントのずれを軽減する方向性を示していました。</li>
+            <li>2026年、NHK技研はレンズ接触配置と高精細マイクロディスプレーにより、薄型化と高精細化を進めた試作機を発表しました。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="comparison-title">
+          <h2 id="comparison-title">他方式との違い</h2>
+          <div class="table-scroll" role="region" aria-label="VRの焦点手がかりを扱う方式比較">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">方式</th>
+                  <th scope="col">考え方</th>
+                  <th scope="col">強み</th>
+                  <th scope="col">弱み</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">従来ステレオHMD</th>
+                  <td>左右視差で奥行きを作る</td>
+                  <td>実装しやすく、現在のVRコンテンツ資産と相性がよい。</td>
+                  <td>ピント位置が固定されやすく、VACが残る。</td>
+                </tr>
+                <tr>
+                  <th scope="row">可変焦点</th>
+                  <td>レンズや表示面の焦点距離を視線に応じて変える</td>
+                  <td>解像度を比較的保ちやすい。</td>
+                  <td>視線追跡、可動光学系、遅延制御が難しい。</td>
+                </tr>
+                <tr>
+                  <th scope="row">多焦点面</th>
+                  <td>複数の奥行き面に映像を出す</td>
+                  <td>設計次第で焦点手がかりを段階的に与えられる。</td>
+                  <td>面の数、明るさ、重なり、遮蔽表現が課題になる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">ライトフィールド</th>
+                  <td>目に入る光線の位置と方向を再現する</td>
+                  <td>奥行きごとのピント手がかりを自然に出しやすい。</td>
+                  <td>画素、視野角、計算量、光学系の制約が厳しい。</td>
+                </tr>
+                <tr>
+                  <th scope="row">ホログラフィー</th>
+                  <td>波面を再現して3次元像を作る</td>
+                  <td>理想的には非常に自然な3D表示に近づける。</td>
+                  <td>計算量、光学素子、表示デバイス、ノイズが大きな課題。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="usage-title">
+          <h2 id="usage-title">向いている用途</h2>
+          <p>
+            NHKが挙げる応用先は、教育、医療、エンターテインメントなどです。
+            これらに共通するのは、短時間のゲーム的な利用よりも、対象をじっくり見たり、奥行きの理解が重要だったり、視覚疲労が体験の継続性を左右したりする点です。
+          </p>
+          <ul>
+            <li>医療や教育で、立体構造を自然な奥行き感で観察する。</li>
+            <li>放送・展示・文化財アーカイブで、長時間見ても疲れにくい3D鑑賞を目指す。</li>
+            <li>遠隔体験やエンタメで、近距離の仮想物体を自然に見せる。</li>
+            <li>研究用途として、VAC低減が行動、視聴時間、没入感に与える影響を評価する。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="cautions-title">
+          <h2 id="cautions-title">現時点の注意点</h2>
+          <ul>
+            <li>2026年6月5日時点では研究試作機であり、一般販売の製品ではありません。</li>
+            <li>公式本文で確認できる主な数値は、約4cmの従来間隔、79%の光学系奥行き削減、技研公開2026の展示日程です。</li>
+            <li>公開図から10.5mm程度の光学系奥行きが読み取れますが、本文に仕様表として列挙された数値ではないため、記事内では「目安」として扱います。</li>
+            <li>視覚疲労の低減は方式上期待される効果であり、量産機での快適性は視野角、重量、明るさ、遅延、コンテンツ品質にも依存します。</li>
+            <li>ライトフィールド表示は、表示デバイス側の画素数を光線方向にも割り当てるため、見た目の解像度を保つには高精細マイクロディスプレーが重要になります。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="references-title">
+          <h2 id="references-title">参照URL</h2>
+          <ul>
+            <li>
+              <a href="https://prtimes.jp/main/html/rd/p/000000057.000160617.html">
+                NHK: 自然で疲れにくい３次元映像を表示できる薄型ライトフィールドヘッドマウントディスプレーを開発
+              </a>
+            </li>
+            <li>
+              <a href="https://prtimes.jp/main/html/rd/p/000000049.000160617.html">
+                NHK: 「NHK 技研公開2026」と「NHK TECH EXPO 2026」の見どころと展示ラインナップ
+              </a>
+            </li>
+            <li>
+              <a href="https://www.moguravr.com/nhk-strl-lightfield-hmd-2026-en/">
+                Mogura VR: NHK Science &amp; Technology Research Laboratories develops a thin, light-field VR headset
+              </a>
+            </li>
+            <li>
+              <a href="https://www.newsshooter.com/2026/05/21/nhk-broadcasting-technology-research-laboratory-light-field-head-mounted-display/">
+                Newsshooter: NHK Broadcasting Technology Research Laboratory Light Field Head-mounted Display
+              </a>
+            </li>
+            <li>
+              <a href="https://www.itmedia.co.jp/news/articles/2205/23/news111.html">
+                ITmedia NEWS: VR空間で現実の見え方を再現する「ライトフィールドHMD」、NHK技研が公開へ
+              </a>
+            </li>
+            <li>
+              <a href="https://research.nvidia.com/publication/2013-11_near-eye-light-field-displays">
+                NVIDIA Research: Near-Eye Light Field Displays
+              </a>
+            </li>
+            <li>
+              <a href="https://www.computationalimaging.org/publications/the-light-field-stereoscope/">
+                Stanford Computational Imaging: The Light Field Stereoscope
+              </a>
+            </li>
+            <li>
+              <a href="https://www.sciencedirect.com/science/article/pii/S2666950121001061">
+                Results in Optics: Vergence-accommodation conflict in optical see-through display: review and prospect
+              </a>
+            </li>
+            <li>
+              <a href="https://av.watch.impress.co.jp/docs/news/1060570.html">
+                AV Watch: JDI、8K液晶ベースの裸眼立体視ライトフィールドディスプレイをNHK-MTと共同開発
+              </a>
+            </li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="content-wrap">
+        <p><a href="../../">記事一覧へ戻る</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
