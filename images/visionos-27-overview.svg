@@ -1,0 +1,73 @@
+<!-- visionOS 27の更新範囲を利用者、開発者、制作者の視点で整理する図解です。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" role="img" aria-labelledby="title desc">
+  <title id="title">visionOS 27の更新範囲</title>
+  <desc id="desc">visionOS 27の更新を、利用者向け機能、開発者向けAPI、制作ワークフローに分けて示す。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-12%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="11" flood-color="#1f2522" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#216b55"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="560" rx="18" fill="#f7f8f5"/>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="48" y="58" fill="#174d3e" font-size="28" font-weight="800">visionOS 27</text>
+    <text x="48" y="86" fill="#657068" font-size="15">Apple Vision Proで「見る・作る・動かす」ための更新</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="345" y="145" width="230" height="140" rx="16" fill="#ffffff" stroke="#d6ded5"/>
+    <rect x="376" y="174" width="168" height="76" rx="22" fill="#eef2ea" stroke="#216b55" stroke-width="3"/>
+    <rect x="404" y="193" width="112" height="38" rx="10" fill="#ffffff" stroke="#b7c8bf"/>
+  </g>
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="460" y="325" fill="#174d3e" font-size="20" font-weight="800">Apple Vision Pro</text>
+    <text x="460" y="350" fill="#657068" font-size="14">空間体験の実行環境</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="42" y="150" width="250" height="250" rx="10" fill="#ffffff" stroke="#d6ded5"/>
+    <rect x="335" y="360" width="250" height="150" rx="10" fill="#ffffff" stroke="#d6ded5"/>
+    <rect x="628" y="150" width="250" height="250" rx="10" fill="#ffffff" stroke="#d6ded5"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="70" y="190" fill="#b46a2a" font-size="15" font-weight="800">利用者向け</text>
+    <text x="70" y="222" fill="#174d3e" font-size="21" font-weight="800">日常体験が広がる</text>
+    <text x="70" y="258" fill="#1f2522" font-size="15">Siri AI</text>
+    <text x="70" y="286" fill="#1f2522" font-size="15">パノラマを空間シーン化</text>
+    <text x="70" y="314" fill="#1f2522" font-size="15">Wi-Fi接続が最大3倍高速</text>
+    <text x="70" y="342" fill="#657068" font-size="13">言語・地域・対応機種に注意</text>
+
+    <text x="364" y="400" fill="#b46a2a" font-size="15" font-weight="800">制作ワークフロー</text>
+    <text x="364" y="432" fill="#174d3e" font-size="21" font-weight="800">実機確認が速くなる</text>
+    <text x="364" y="468" fill="#1f2522" font-size="15">Spatial Preview</text>
+    <text x="364" y="496" fill="#1f2522" font-size="15">Immersive Video制作支援</text>
+
+    <text x="656" y="190" fill="#b46a2a" font-size="15" font-weight="800">開発者向け</text>
+    <text x="656" y="222" fill="#174d3e" font-size="21" font-weight="800">表現と入力が増える</text>
+    <text x="656" y="258" fill="#1f2522" font-size="15">RealityKit強化</text>
+    <text x="656" y="286" fill="#1f2522" font-size="15">3D Gaussian Splats描画</text>
+    <text x="656" y="314" fill="#1f2522" font-size="15">物体追跡と空間アクセサリ</text>
+    <text x="656" y="342" fill="#1f2522" font-size="15">Foveated Streaming</text>
+  </g>
+
+  <g fill="none" stroke="#216b55" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)">
+    <path d="M292 250 C318 236 326 226 345 216"/>
+    <path d="M628 250 C602 236 594 226 575 216"/>
+    <path d="M460 360 L460 298"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <rect x="68" y="430" width="250" height="56" rx="8" fill="#eef2ea" stroke="#d6ded5"/>
+    <text x="88" y="456" fill="#174d3e" font-size="14" font-weight="800">正式版は秋予定</text>
+    <text x="88" y="477" fill="#657068" font-size="12">ベータ中の仕様変更に注意</text>
+
+    <rect x="602" y="430" width="250" height="56" rx="8" fill="#eef2ea" stroke="#d6ded5"/>
+    <text x="622" y="456" fill="#174d3e" font-size="14" font-weight="800">SDKと対応ハードが鍵</text>
+    <text x="622" y="477" fill="#657068" font-size="12">全アプリが自動対応するわけではない</text>
+  </g>
+</svg>

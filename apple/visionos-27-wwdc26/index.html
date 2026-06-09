@@ -1,0 +1,255 @@
+<!doctype html>
+<!-- WWDC26で発表されたvisionOS 27の利用者向け機能と開発者向け更新を整理する技術ノートです。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>visionOS 27はApple Vision Proをどう変えるのか | 技術質問ノート</title>
+    <meta
+      name="description"
+      content="AppleがWWDC26で発表したvisionOS 27について、利用者向け機能、開発者向けAPI、制作ワークフロー、注意点を初心者向けに整理します。"
+    >
+    <link rel="stylesheet" href="../../styles/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-title" href="../../" aria-label="技術質問ノートのトップへ">
+          <span class="site-title__mark">?</span>
+          <span>技術質問ノート</span>
+        </a>
+        <nav class="site-nav" aria-label="主要ナビゲーション">
+          <a href="../../#notes">記事一覧</a>
+          <a href="../../#workflow">運用</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="article-layout">
+      <article class="article">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <a href="../../">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Apple / visionOS</span>
+        </nav>
+
+        <header class="article-header">
+          <p class="eyebrow">Apple / visionOS</p>
+          <h1>visionOS 27はApple Vision Proをどう変えるのか</h1>
+          <p class="article-summary">
+            AppleはWWDC26で、iOS 27やmacOS 27などとあわせてvisionOS 27を発表しました。
+            Apple Vision Pro向けには、ユーザーが体験する機能だけでなく、3D制作、ゲーム、ストリーミング、物体追跡を支える開発基盤も大きく更新されています。
+          </p>
+          <dl class="article-meta">
+            <div>
+              <dt>作成日</dt>
+              <dd><time datetime="2026-06-09">2026-06-09</time></dd>
+            </div>
+            <div>
+              <dt>対象</dt>
+              <dd>Apple Vision Pro / visionOS 27 / Spatial Computing</dd>
+            </div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="summary-title">
+          <h2 id="summary-title">結論</h2>
+          <p>
+            visionOS 27は、Apple Vision Proの画面表示だけを少し変える更新ではありません。
+            ユーザー向けにはSiri AI、写真の空間化、Wi-Fi接続の高速化などが加わり、開発者向けにはRealityKit、Reality Composer Pro 3、Spatial Preview、Foveated Streaming、物体追跡、Apple Immersive Video関連の機能が拡張されます。
+          </p>
+          <p>
+            初心者向けに一言でいうと、visionOS 27は「Vision Proで見る・作る・動かす」ための土台を広げる更新です。
+            写真やAIのように一般ユーザーがすぐ理解しやすい機能もありますが、発表内容の多くは、より自然な3D体験や本格的な制作環境を作るための開発者向け機能です。
+          </p>
+          <p>
+            ただし、2026年6月9日時点ではベータ段階です。
+            Appleは開発者向けテストを2026年6月8日に開始し、パブリックベータを翌月、正式版を秋の無料ソフトウェアアップデートとして提供予定と説明しています。
+            地域、言語、対応機種、規制によって使える機能が変わる点には注意が必要です。
+          </p>
+        </section>
+
+        <section aria-labelledby="overview-title">
+          <h2 id="overview-title">何ができるようになるのか</h2>
+          <figure>
+            <img
+              src="../../images/visionos-27-overview.svg"
+              alt="visionOS 27の更新を利用者向け機能、開発者向けAPI、制作ワークフローに分けた図"
+              width="920"
+              height="560"
+            >
+            <figcaption>visionOS 27は、一般ユーザーの体験改善と、開発者・制作者向けの空間コンテンツ基盤強化を同時に進める更新です。</figcaption>
+          </figure>
+          <p>
+            Appleの発表を大きく分けると、3つの層があります。
+            1つ目は、Siri AIや写真の空間化のように、利用者が直接触る機能です。
+            2つ目は、RealityKitや物体追跡のように、アプリの表現力や操作性を上げる開発者向け機能です。
+            3つ目は、MacからVision Proへ空間コンテンツを確認する仕組みやApple Immersive Videoの制作支援など、制作現場の作業を速くする機能です。
+          </p>
+        </section>
+
+        <section aria-labelledby="users-title">
+          <h2 id="users-title">利用者向けの主な変化</h2>
+          <ul>
+            <li>
+              <strong>Siri AIがVision Proにも深く統合される。</strong>
+              Appleは、Siri AIがiPhone、iPad、Mac、Apple Watch、Apple Vision Proに統合され、画面上の内容、個人の文脈、Web上の最新情報を使って回答できると説明しています。
+            </li>
+            <li>
+              <strong>パノラマ写真を空間シーンに変換できる。</strong>
+              Apple Vision Proのユーザーは、パノラマ写真をSpatial Scenesに変換し、自分用のEnvironmentとして使えるようになります。
+              旅行先や思い出の写真を、平面写真ではなく周囲に広がる空間として楽しむ用途が想定できます。
+            </li>
+            <li>
+              <strong>Wi-Fi接続が最大3倍速くなる。</strong>
+              AppleはVision ProのWi-Fi接続が最大3倍高速になると説明しています。
+              これはアプリのダウンロードやクラウド同期だけでなく、ストリーミング型の空間体験にも効いてくる可能性があります。
+            </li>
+            <li>
+              <strong>Apple Intelligenceの利用条件に注意が必要。</strong>
+              Apple IntelligenceとSiri AIは、対応デバイス、対応言語、地域によって提供状況が変わります。
+              Siri AIはまず英語設定の対応デバイス向けベータとして提供され、言語対応は段階的に広がる予定です。
+            </li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="developer-title">
+          <h2 id="developer-title">開発者向けの主な変化</h2>
+          <div class="table-scroll" role="region" aria-label="visionOS 27の開発者向け更新">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">領域</th>
+                  <th scope="col">追加・強化されること</th>
+                  <th scope="col">初心者向けの意味</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">RealityKit</th>
+                  <td>Physical Space Lighting、Projective Textures API、リアルタイム布シミュレーション、Reverb Mesh API、3D Gaussian Splatsの効率的な描画。</td>
+                  <td>仮想物体の光、布の動き、音の反響、現実物の3Dスキャン表現を、より自然に扱いやすくなる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">Reality Composer Pro 3</th>
+                  <td>Mac上で3Dコンテンツを作り、Live PreviewでApple Vision Pro上の見え方をすぐ確認できる。Xcode連携、ビジュアルスクリプティング、生成系支援も強化。</td>
+                  <td>3Dの配置やアニメーションを直してから実機で確認するまでの待ち時間が短くなる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">ゲームエンジン</th>
+                  <td>Unityで空間アクセサリを扱える。GodotはCompositorServices、RealityKitレンダリングプラグイン、PHASE音声プラグインに対応。</td>
+                  <td>UnityやGodotで作ったゲームをVision Pro向けに展開しやすくなる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">Spatial Preview</th>
+                  <td>MacアプリからQuick Look on visionOSへ接続し、空間写真、Apple Immersive Video、3Dコンテンツ、USD編集をVision Proで確認できる。</td>
+                  <td>制作者がMacで作った空間コンテンツを、Vision Proでその場確認しながら調整しやすくなる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">Foveated Streaming</th>
+                  <td>Vision ProからPC、ワークステーション、クラウドサーバーへ接続し、見ている付近を中心に高品質映像を送る。OpenXRアプリはNVIDIA CloudXR SDKと連携可能。</td>
+                  <td>重い3D描画を外部マシンに任せ、Vision Pro側では必要な部分を効率よく表示できる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">物体追跡</th>
+                  <td>高フレームレート追跡、Create MLの拡張トレーニング、補正なしのメートル空間ポーズ取得、iOSとの共通化、最大90Hzの空間アクセサリ追跡。</td>
+                  <td>手に持った道具や専用コントローラーを、現実空間内でより正確に使えるアプリを作りやすくなる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">Apple Immersive Video</th>
+                  <td>IMSへの追加、カメラ表示コマンド、MacからVision Proへのリアルタイムプレビュー、カスタムコンポジタ、ワイドポータル対応。</td>
+                  <td>没入型映像の撮影、編集、確認、配信表現を、より本格的な制作ワークフローに近づけられる。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="workflow-title">
+          <h2 id="workflow-title">制作ワークフローへの意味</h2>
+          <p>
+            visionOS 27で特に重要なのは、空間コンテンツを作る人の試行錯誤が短くなることです。
+            たとえばReality Composer Pro 3のLive PreviewやSpatial Previewを使うと、Macで作った3Dシーンや空間写真をVision Proで確認しながら調整できます。
+            これは、2D画面だけでは判断しにくい奥行き、見上げた時の配置、照明の当たり方、素材感を実機に近い状態で確認しやすくするものです。
+          </p>
+          <p>
+            3D Gaussian SplatsをRealityKitで効率的に描画できる点も、今後の制作には大きいです。
+            3D Gaussian Splattingは、実物を撮影して写真のようにリアルな3D表現を作る技術として注目されています。
+            visionOS 27の発表は、そうした現実ベースの3D素材をApple Vision Proの体験に組み込みやすくする方向を示しています。
+          </p>
+          <p>
+            一方、Foveated Streamingは、Vision Pro単体では重すぎる処理を外部のPCやクラウドで実行する方向です。
+            ユーザーが見ている付近に高品質な映像を集中させるため、全画面を常に最高品質で送るより効率的です。
+            フライトシミュレーター、設計レビュー、大規模な3D空間の可視化など、計算負荷の大きい用途と相性があります。
+          </p>
+        </section>
+
+        <section aria-labelledby="accessibility-title">
+          <h2 id="accessibility-title">関連するアクセシビリティ更新</h2>
+          <p>
+            AppleはWWDC26前の2026年5月にも、Apple Vision Proを含むアクセシビリティ関連の更新を発表しています。
+            たとえば、ライブ会話やアプリ内音声を字幕化する仕組み、Apple Vision Proの目のトラッキングを使って対応する車いすを操作する機能などです。
+            ただし、これらは利用環境や対応機器に条件があり、Apple Vision Pro Developer Strapが必要になる有線接続のような注意点もあります。
+          </p>
+          <p>
+            つまりvisionOS 27周辺の流れは、単に映像が派手になるだけではありません。
+            空間コンピューティングを、視覚、聴覚、身体操作、制作現場の各面から実用に近づけようとしていると見ると理解しやすくなります。
+          </p>
+        </section>
+
+        <section aria-labelledby="cautions-title">
+          <h2 id="cautions-title">現時点の注意点</h2>
+          <ul>
+            <li>2026年6月9日時点ではベータ段階であり、正式版までに仕様、名称、提供時期が変わる可能性があります。</li>
+            <li>Siri AIやApple Intelligenceは、対応デバイス、言語、地域、規制で提供状況が変わります。日本語で同じ時期に全機能が使えるとは限りません。</li>
+            <li>3D Gaussian Splatsの描画対応は、画像1枚から自動で3D素材を作れるという意味ではありません。素材生成、最適化、権利確認は別途必要です。</li>
+            <li>Foveated Streamingは、外部PCやクラウド側のエンドポイント、ネットワーク品質、アプリ側の統合が必要です。Vision Pro単体で全アプリが自動的に高速化するわけではありません。</li>
+            <li>Unity、Godot、空間アクセサリ、Apple Immersive Video関連の機能は、対応SDK、対応エンジン、対応ハードウェアの提供状況に左右されます。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="references-title">
+          <h2 id="references-title">参照URL</h2>
+          <ul>
+            <li>
+              <a href="https://www.apple.com/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/">
+                Apple Newsroom: WWDC26: Apple unveils next generation of Apple Intelligence, Siri AI, powerful parental controls, and an expansive set of software improvements
+              </a>
+            </li>
+            <li>
+              <a href="https://developer.apple.com/visionos/whats-new/">
+                Apple Developer: What’s new in visionOS 27
+              </a>
+            </li>
+            <li>
+              <a href="https://developer.apple.com/wwdc26/guides/visionos/">
+                Apple Developer: WWDC26 visionOS guide
+              </a>
+            </li>
+            <li>
+              <a href="https://developer.apple.com/news/releases/?id=06082026f">
+                Apple Developer: visionOS 27 beta (24M5291p)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.apple.com/newsroom/2026/06/apple-introduces-siri-ai-a-profoundly-more-capable-and-personal-assistant/">
+                Apple Newsroom: Apple introduces Siri AI, a profoundly more capable and personal assistant
+              </a>
+            </li>
+            <li>
+              <a href="https://www.apple.com/uk/newsroom/2026/05/apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence/">
+                Apple Newsroom: Apple unveils new accessibility features, and updates with Apple Intelligence
+              </a>
+            </li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="content-wrap">
+        <p><a href="../../">記事一覧へ戻る</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
