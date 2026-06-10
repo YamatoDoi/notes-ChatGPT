@@ -1,0 +1,285 @@
+<!doctype html>
+<!-- 2026年6月のWP.29会合で採決予定の自動運転システム世界ルールを整理する技術ノートです。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>自動運転の世界ルールは何が決まるのか | 技術質問ノート</title>
+    <meta
+      name="description"
+      content="2026年6月23日からの国連WP.29会合で採決予定の自動運転システム世界ルールについて、GTRとUN規則、安全ケース、日本の役割、国内実装まで整理します。"
+    >
+    <link rel="stylesheet" href="../../styles/site.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-title" href="../../" aria-label="技術質問ノートのトップへ">
+          <span class="site-title__mark">?</span>
+          <span>技術質問ノート</span>
+        </a>
+        <nav class="site-nav" aria-label="主要ナビゲーション">
+          <a href="../../#notes">記事一覧</a>
+          <a href="../../#workflow">運用</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="article-layout">
+      <article class="article">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <a href="../../">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Mobility / Autonomous Driving</span>
+        </nav>
+
+        <header class="article-header">
+          <p class="eyebrow">Mobility / Autonomous Driving</p>
+          <h1>自動運転の世界ルールは何が決まるのか</h1>
+          <p class="article-summary">
+            自動運転ラボは、国連の車両規制調和フォーラムWP.29が2026年6月23日から26日の会合で、自動運転システムADSの世界統一規則を採決すると報じました。
+            ここでは、何が決まるのか、日本がどこで関わっているのか、採択されてもすぐ路上で何でもできるわけではない理由を整理します。
+          </p>
+          <dl class="article-meta">
+            <div>
+              <dt>作成日</dt>
+              <dd><time datetime="2026-06-10">2026-06-10</time></dd>
+            </div>
+            <div>
+              <dt>対象</dt>
+              <dd>WP.29 / GRVA / ADS / GTR / UN Regulation</dd>
+            </div>
+          </dl>
+        </header>
+
+        <section aria-labelledby="summary-title">
+          <h2 id="summary-title">結論</h2>
+          <p>
+            2026年6月23日から26日に予定されるWP.29会合の焦点は、自動運転システムADSを国際的にどう認めるかの共通枠組みです。
+            報道によれば、会期中の採決は6月24日が見込まれ、可決されれば国際レベルでは即日発効します。
+          </p>
+          <p>
+            重要なのは、この世界ルールが「車両が満たすべき細かな数値を一律に並べるだけ」の規則ではない点です。
+            メーカーが、自社のADSが想定する運行範囲で、有能で慎重な人間ドライバーと少なくとも同等の安全水準にあることを根拠付きで示す「安全ケース」を中核にします。
+            さらに、安全マネジメントシステム、シナリオに基づく評価、市販後の監視、ADS用データ記録装置などが組み合わさります。
+          </p>
+          <p>
+            ただし、採択はそのまま日本の公道でロボタクシーや無人車両が自由に走れることを意味しません。
+            国際ルールは車両の認証や評価の土台であり、実際に走らせるには各国の道路交通法、道路運送車両法、運行管理、責任分担、保険、自治体の許認可などに落とし込む必要があります。
+          </p>
+        </section>
+
+        <section aria-labelledby="map-title">
+          <h2 id="map-title">全体像</h2>
+          <figure>
+            <img
+              src="../../images/ads-global-rules-flow.svg"
+              alt="WP.29で採択される自動運転システム規則がGTRとUN規則に分かれ、各国の国内法へ反映される流れ"
+              width="920"
+              height="560"
+            >
+            <figcaption>世界ルールは、国際採択で終わるのではなく、GTRとUN規則を通じて各国の制度へ接続されます。</figcaption>
+          </figure>
+          <p>
+            今回の話を理解する鍵は、WP.29、GRVA、GTR、UN規則の4つです。
+            WP.29は国連欧州経済委員会の車両規制調和フォーラムで、車両の安全・環境・盗難防止などの国際規則を扱います。
+            GRVAはその下で自動運転、自動運転支援、コネクテッド車両、サイバーセキュリティなどを扱う専門部会です。
+          </p>
+          <p>
+            今回のADS規則は、米国や中国のような自己認証型の制度にも、日本やEU、韓国のような型式認定型の制度にも接続できるよう、二本立てで扱われます。
+            つまり、制度の形は各国で違っても、安全評価の考え方をそろえることが狙いです。
+          </p>
+        </section>
+
+        <section aria-labelledby="what-title">
+          <h2 id="what-title">何が決まるのか</h2>
+          <div class="table-scroll" role="region" aria-label="自動運転世界ルールで決まる主な項目">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">項目</th>
+                  <th scope="col">内容</th>
+                  <th scope="col">初心者向けの意味</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">対象</th>
+                  <td>ADS、つまり特定の運行設計領域ODD内で、動的運転タスクDDTを継続的に実行する自動運転システム。</td>
+                  <td>単なる車線維持支援ではなく、条件内で運転そのものをシステムが担う領域を扱う。</td>
+                </tr>
+                <tr>
+                  <th scope="row">安全ケース</th>
+                  <td>メーカーが、システムの設計、試験、シナリオ評価、残余リスク、監視体制を根拠付きで説明する考え方。</td>
+                  <td>「この車は安全です」と宣言するだけでなく、なぜ安全と言えるのかを証拠で示す。</td>
+                </tr>
+                <tr>
+                  <th scope="row">安全マネジメント</th>
+                  <td>開発、変更、市販後監視、ソフトウェア更新、事故・不具合対応までを管理する仕組み。</td>
+                  <td>発売時だけでなく、運用中も安全を維持する体制が問われる。</td>
+                </tr>
+                <tr>
+                  <th scope="row">シナリオ評価</th>
+                  <td>合流、右左折、横断、歩行者、悪条件など、想定される交通場面でADSの振る舞いを評価する。</td>
+                  <td>公道で起きる複雑な場面を、試験・シミュレーション・実走で組み合わせて確認する。</td>
+                </tr>
+                <tr>
+                  <th scope="row">データ記録</th>
+                  <td>DSSADのようなADS用データ記録装置で、作動状態や引き継ぎ、イベントを追跡できるようにする。</td>
+                  <td>事故やトラブル時に、人が運転していたのか、システムが運転していたのかを確認しやすくする。</td>
+                </tr>
+                <tr>
+                  <th scope="row">国際接続</th>
+                  <td>GTRとUN規則の二本立てで、自己認証型と型式認定型の両方の制度へつなぐ。</td>
+                  <td>世界中の制度を完全に同じにするのではなく、同じ安全思想を各国制度に取り込めるようにする。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="two-track-title">
+          <h2 id="two-track-title">GTRとUN規則の違い</h2>
+          <p>
+            今回の規則が分かりにくいのは、一本の「世界法」ができるわけではないからです。
+            自動運転ラボの記事では、採決対象は世界技術規則GTRとUN規則の二本立てだと整理されています。
+            背景には、車両の安全を確認する制度が国ごとに違うという事情があります。
+          </p>
+          <div class="table-scroll" role="region" aria-label="GTRとUN規則の違い">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">枠組み</th>
+                  <th scope="col">主に接続する制度</th>
+                  <th scope="col">特徴</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">GTR</th>
+                  <td>米国、中国などが関わる自己認証型・各国独自制度との接続。</td>
+                  <td>世界技術規則として共通の性能要件や試験・評価の考え方を示し、各国が自国手続きで反映する。</td>
+                </tr>
+                <tr>
+                  <th scope="row">UN規則</th>
+                  <td>日本、EU、韓国などの型式認定型制度との接続。</td>
+                  <td>当局や技術機関が型式認可に使う規則として国内法へ取り込みやすい。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            たとえばEUでは、Commission Implementing Regulation (EU) 2022/1426が、完全自動運転車のADS型式認可について、シナリオ、メーカー文書、安全マネジメント、市販後データなどを要求しています。
+            これは今回の国連ルールそのものではありませんが、ADSを「試験だけで一発合格」ではなく、設計根拠と運用後監視を含めて評価する方向性を理解するうえで参考になります。
+          </p>
+        </section>
+
+        <section aria-labelledby="japan-title">
+          <h2 id="japan-title">日本はなぜ中核にいるのか</h2>
+          <p>
+            日本が注目される理由は、単に自動車産業が大きいからではありません。
+            自動運転ラボは、GRVA本体で日本が副議長国の一角を担い、作業部会や専門家会合でも日本が共同議長や副議長を務める場面があると説明しています。
+            つまり、出来上がった規則に従うだけでなく、規則の作り方そのものに関わっているということです。
+          </p>
+          <p>
+            また、日本には実装実績もあります。
+            Hondaは2021年3月、Honda SENSING Eliteを搭載したLegendを日本でリース販売し、そのTraffic Jam Pilotが限定領域でのレベル3自動運転に該当すると説明しました。
+            Hondaの発表では、この機能は国土交通省から型式指定を受けており、日本は「ルールを作る側」と「実際に型式認可して走らせた側」の両方の経験を持っています。
+          </p>
+          <p>
+            これは今後の産業競争にも効きます。
+            自動運転は、AIやセンサーだけで勝負が決まる技術ではありません。
+            事故時の記録、責任分担、認証手続き、ソフトウェア更新、市販後監視まで含めて、社会が受け入れられる制度を作れるかが普及速度を左右します。
+          </p>
+        </section>
+
+        <section aria-labelledby="country-title">
+          <h2 id="country-title">主要国の見方</h2>
+          <ul>
+            <li>
+              <strong>日本。</strong>
+              型式認定型の制度を持ち、レベル3市販車の認可実績があります。
+              国際基準を国内の道路運送車両法や保安基準にどう取り込むかが次の焦点になります。
+            </li>
+            <li>
+              <strong>EU。</strong>
+              既に完全自動運転車のADS型式認可に関する規則を整備しており、国際ルールとの整合性を取りながら量産・域内承認の道筋を作る立場です。
+            </li>
+            <li>
+              <strong>米国。</strong>
+              自己認証型の制度が中心で、連邦法の包括的な自動運転制度は長く課題になっています。
+              GTR側の議論は、米国制度にも接続しやすい共通技術要件を作る意味を持ちます。
+            </li>
+            <li>
+              <strong>中国。</strong>
+              自国の国家標準整備を進めつつ、今回の世界規則の構造に沿う姿勢を示していると報じられています。
+              独自市場の大きさと国際標準への接続を両立させる動きです。
+            </li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="impact-title">
+          <h2 id="impact-title">採択されたら何が変わるのか</h2>
+          <p>
+            一番大きな変化は、メーカー、当局、保険、自治体、運行事業者が同じ安全評価の言葉を使いやすくなることです。
+            これまでは国ごとに制度や評価軸が分かれやすく、企業は地域ごとに別々の説明を求められがちでした。
+            共通枠組みができると、少なくとも「どのような証拠を出すべきか」「市販後に何を監視すべきか」の基準をそろえやすくなります。
+          </p>
+          <p>
+            もう一つは、ロボタクシーや自動運転トラックの実証から商用化への移行です。
+            ただ走れる技術があるだけでは、車両認証、運行許可、事故時の責任、遠隔監視、データ保存、サイバーセキュリティ、ソフトウェア更新を社会制度としてつなげられません。
+            世界ルールは、そのうち車両側の安全認証を国際的にそろえるための土台になります。
+          </p>
+        </section>
+
+        <section aria-labelledby="cautions-title">
+          <h2 id="cautions-title">注意点</h2>
+          <ul>
+            <li>この記事は2026年6月10日時点の公開情報に基づきます。WP.29会合の採決結果、最終文言、発効・反映時期は会合後に確認が必要です。</li>
+            <li>国際レベルで発効しても、各国の国内法や許認可制度へ反映されるまで実運用は進みません。</li>
+            <li>GTRとUN規則は制度上の接続先が異なるため、「世界中で同じ法律になる」という理解は不正確です。</li>
+            <li>安全ケースは、メーカーの自己主張をそのまま認める仕組みではなく、設計根拠、評価結果、市販後監視を説明し、当局や技術機関が確認するための枠組みです。</li>
+            <li>自動運転支援、レベル3、レベル4、完全自動運転は責任分担が異なります。マーケティング上の「自動運転」という言葉だけで性能を判断しないことが重要です。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="references-title">
+          <h2 id="references-title">参照URL</h2>
+          <ul>
+            <li>
+              <a href="https://jidounten-lab.com/u_63324">
+                自動運転ラボ: 自動運転の世界ルール今月23日に決定へ 日本が世界の中核を担う
+              </a>
+            </li>
+            <li>
+              <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32022R1426">
+                EUR-Lex: Commission Implementing Regulation (EU) 2022/1426
+              </a>
+            </li>
+            <li>
+              <a href="https://global.honda/en/newsroom/news/2021/4210304eng-legend.html">
+                Honda Global: Honda to Begin Sales of Legend with New Honda SENSING Elite
+              </a>
+            </li>
+            <li>
+              <a href="https://unece.org/wp29-how-it-works-how-join-it">
+                UNECE: World Forum for Harmonization of Vehicle Regulations (WP.29) - How it works, how to join it
+              </a>
+            </li>
+            <li>
+              <a href="https://unece.org/transport/vehicle-regulations">
+                UNECE: Vehicle Regulations
+              </a>
+            </li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="content-wrap">
+        <p><a href="../../">記事一覧へ戻る</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!-- 自動運転システムの世界ルールが国際採択から国内制度へ接続される流れを示す図解です。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" role="img" aria-labelledby="title desc">
+  <title id="title">自動運転システム世界ルールの流れ</title>
+  <desc id="desc">WP.29とGRVAで検討されたADS規則が、GTRとUN規則に分かれて各国の国内法へ反映される流れを示す。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-14%" width="120%" height="134%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#1f2522" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#216b55"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="560" rx="18" fill="#f7f8f5"/>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="48" y="58" fill="#174d3e" font-size="28" font-weight="800">ADS世界ルールの接続先</text>
+    <text x="48" y="86" fill="#657068" font-size="15">国際採択はスタート地点。国内制度への反映で実運用につながる。</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="300" y="120" width="320" height="96" rx="12" fill="#ffffff" stroke="#d6ded5"/>
+    <rect x="316" y="136" width="288" height="64" rx="10" fill="#eef2ea" stroke="#b7c8bf"/>
+  </g>
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="460" y="163" fill="#b46a2a" font-size="15" font-weight="800">国連 WP.29 / GRVA</text>
+    <text x="460" y="188" fill="#174d3e" font-size="20" font-weight="800">ADSの共通安全思想を採択</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="276" width="300" height="150" rx="10" fill="#ffffff" stroke="#d6ded5"/>
+    <rect x="540" y="276" width="300" height="150" rx="10" fill="#ffffff" stroke="#d6ded5"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="110" y="316" fill="#b46a2a" font-size="15" font-weight="800">GTR</text>
+    <text x="110" y="346" fill="#174d3e" font-size="21" font-weight="800">世界技術規則</text>
+    <text x="110" y="382" fill="#1f2522" font-size="15">自己認証型の制度へ接続</text>
+    <text x="110" y="410" fill="#657068" font-size="13">米国・中国などが各国手続きで反映</text>
+
+    <text x="570" y="316" fill="#b46a2a" font-size="15" font-weight="800">UN Regulation</text>
+    <text x="570" y="346" fill="#174d3e" font-size="21" font-weight="800">UN規則</text>
+    <text x="570" y="382" fill="#1f2522" font-size="15">型式認定型の制度へ接続</text>
+    <text x="570" y="410" fill="#657068" font-size="13">日本・EU・韓国などが国内法に取り込む</text>
+  </g>
+
+  <g fill="none" stroke="#216b55" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)">
+    <path d="M430 216 C360 244 292 252 230 276"/>
+    <path d="M490 216 C560 244 628 252 690 276"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="120" y="462" width="680" height="58" rx="10" fill="#ffffff" stroke="#d6ded5"/>
+  </g>
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="460" y="488" fill="#174d3e" font-size="17" font-weight="800">国内法・型式認可・運行許可・保険・責任分担へ反映</text>
+    <text x="460" y="511" fill="#657068" font-size="13">国際発効だけで公道運用が自動解禁されるわけではない</text>
+  </g>
+
+  <g fill="none" stroke="#216b55" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)">
+    <path d="M230 426 C255 446 300 456 360 462"/>
+    <path d="M690 426 C665 446 620 456 560 462"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <rect x="64" y="126" width="178" height="76" rx="8" fill="#eef2ea" stroke="#d6ded5"/>
+    <text x="84" y="154" fill="#174d3e" font-size="14" font-weight="800">中核概念</text>
+    <text x="84" y="178" fill="#1f2522" font-size="13">安全ケース / SMS / DSSAD</text>
+
+    <rect x="678" y="126" width="178" height="76" rx="8" fill="#eef2ea" stroke="#d6ded5"/>
+    <text x="698" y="154" fill="#174d3e" font-size="14" font-weight="800">日本の関与</text>
+    <text x="698" y="178" fill="#1f2522" font-size="13">GRVA副議長国の一角</text>
+  </g>
+</svg>
